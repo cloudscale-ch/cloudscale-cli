@@ -1,0 +1,17 @@
+site_name: Cloudscale.ch CLI
+repo_url: https://github.com/cloudscale-ch/cloudscale-cli
+nav:
+  - Home: index.md
+  - Autocompletion: autocompletion.md
+  - Authentication: auth.md
+  - Server Usages: server.md
+  - Working with Tags: tags.md
+  - Debugging: debug.md
+theme:
+  name: material
+  logo: images/cloudscale.ch.png
+  palette:
+    primary: white
+markdown_extensions:
+  - codehilite
+  - admonition
