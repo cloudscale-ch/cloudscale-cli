@@ -20,6 +20,7 @@ def cmd_list(cloudscale, filter_tag, filter_json, delete):
         filter_tag=filter_tag,
         filter_json=filter_json,
         delete=delete,
+        uuid='id',
     )
 
 @click.argument('uuid', required=True)
