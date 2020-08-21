@@ -76,40 +76,19 @@ def cmd_create(
     tags,
     count,
 ):
-    if count > 1:
-        servers_created = list()
-        while len(servers_created) < count:
-            uid = str(uuid.uuid4()).split('-')[0]
-            counter = len(servers_created) + 1
-            try:
-                server_name = name.format(uid=uid, counter=counter)
-            except KeyError as e:
-                click.echo(f"Error: Could not format name '{name}': {e}", err=True)
-                sys.exit(1)
+    servers_created = list()
+    while len(servers_created) < count:
+        uid = str(uuid.uuid4()).split('-')[0]
+        counter = len(servers_created) + 1
+        try:
+            server_name = name.format(uid=uid, counter=counter)
+        except KeyError as e:
+            click.echo(f"Error: Could not format name '{name}': {e}", err=True)
+            sys.exit(1)
 
-            s = cloudscale.cmd_create(
-                silent=True,
-                name=server_name,
-                flavor=flavor,
-                image=image,
-                zone=zone,
-                volume_size=volume_size,
-                volumes=volumes or None,
-                interfaces=interfaces or None,
-                ssh_keys=ssh_keys or None,
-                password=password,
-                use_public_network=use_public_network,
-                use_private_network=use_private_network,
-                use_ipv6=use_ipv6,
-                server_groups=server_groups or None,
-                user_data=user_data,
-                tags=tags,
-            )
-            servers_created.append(s)
-        click.echo(cloudscale._format_output(servers_created))
-    else:
-        cloudscale.cmd_create(
-            name=name,
+        s = cloudscale.cmd_create(
+            silent=True,
+            name=server_name,
             flavor=flavor,
             image=image,
             zone=zone,
@@ -125,6 +104,8 @@ def cmd_create(
             user_data=user_data,
             tags=tags,
         )
+        servers_created.append(s)
+    click.echo(cloudscale._format_output(servers_created))
 
 @click.argument('uuid', required=True)
 @click.option('--name')
