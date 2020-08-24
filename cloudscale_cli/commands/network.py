@@ -34,8 +34,8 @@ def cmd_show(cloudscale, uuid):
 
 @click.option('--name', required=True)
 @click.option('--zone')
-@click.option('--mtu', type=int, default=9000)
-@click.option('--auto-create-ipv4-subnet', type=bool, default=True)
+@click.option('--mtu', type=int, default=9000, show_default=True)
+@click.option('--auto-create-ipv4-subnet/--no-auto-create-ipv4-subnet', type=bool, default=True, show_default=True)
 @click.option('--tag', 'tags', multiple=True)
 @network.command("create")
 @click.pass_obj
