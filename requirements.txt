@@ -1,4 +1,4 @@
-cloudscale-sdk
+cloudscale-sdk>=0.2.0
 click>=7.0.0
 tabulate
 pygments
