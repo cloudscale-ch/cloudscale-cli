@@ -1,4 +1,4 @@
-site_name: Cloudscale.ch CLI
+site_name: cloudscale.ch CLI
 repo_url: https://github.com/cloudscale-ch/cloudscale-cli
 nav:
   - Home: index.md
