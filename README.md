@@ -40,3 +40,7 @@ Commands:
   subnet
   volume
 ~~~
+
+## Documentation
+
+Please visit [https://cloudscale-ch.github.io/cloudscale-cli](https://cloudscale-ch.github.io/cloudscale-cli).

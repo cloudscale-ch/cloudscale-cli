@@ -1,22 +1,5 @@
 # Authentication
 
-## By Evironment Variable
-
-Using the ENV `CLOUDSCALE_API_TOKEN` variable:
-
-~~~shell
-export CLOUDSCALE_API_TOKEN=<your token>
-cloudscale flavor list
-~~~
-
-## Command Line Argument
-
-Passing the `--api-token` parameter:
-
-~~~shell
-cloudscale --api-token <your_token> server create ...
-~~~
-
 ## Config File with Profiles
 
 Creating an ini file `.cloudscale.ini` (leading dot) in your `$HOME` or a `cloudscale.ini` (without leading dot) in the `CWD` with the following schema:
@@ -44,4 +27,21 @@ Passing the command line option will overwrite the ENV var as one would expect:
 
 ~~~shell
 cloudscale --profile production server list
+~~~
+
+## Command Line Argument
+
+Passing the `--api-token` parameter:
+
+~~~shell
+cloudscale --api-token <your_token> server create ...
+~~~
+
+## By Evironment Variable
+
+Using the ENV `CLOUDSCALE_API_TOKEN` variable:
+
+~~~shell
+export CLOUDSCALE_API_TOKEN=<your token>
+cloudscale flavor list
 ~~~
