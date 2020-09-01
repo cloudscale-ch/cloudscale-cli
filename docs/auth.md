@@ -2,7 +2,7 @@
 
 ## Config File with Profiles
 
-Creating an ini file `.cloudscale.ini` (leading dot) in your `$HOME` or a `cloudscale.ini` (without leading dot) in the `CWD` with the following schema:
+Creating an ini file in your `$XDG_CONFIG_HOME/cloudscale/cloudscale.ini`, `.cloudscale.ini` (leading dot) in your `$HOME` or a `cloudscale.ini` (without leading dot) in the `CWD` with the following schema:
 
 ~~~ini
 [default]
