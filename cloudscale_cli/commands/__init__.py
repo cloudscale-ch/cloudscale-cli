@@ -43,7 +43,7 @@ class CloudscaleCommand:
                 response = [response]
             return to_table(response, self.headers)
 
-    def cmd_list(self, filter_tag=None, filter_json=None, action=None, delete=False, uuid='uuid'):
+    def cmd_list(self, filter_tag=None, filter_json=None, action=None, delete=False):
         if action and delete:
             click.echo("Error: --action and --delete are mutually exclusive", err=True)
             sys.exit(1)
@@ -60,18 +60,20 @@ class CloudscaleCommand:
             if delete:
                 click.confirm(f"Do you want to delete?", abort=True)
                 for r in response:
-                    if uuid not in r:
-                        click.echo("No UUID found, could not delete.", err=True)
+                    if 'href' not in r:
+                        click.echo("No href found, could not delete.", err=True)
                         sys.exit(1)
-                    self.cmd_delete(uuid=r[uuid], force=True, skip_query=True)
+                    uuid = r['href'].split('/')[-1]
+                    self.cmd_delete(uuid=uuid, force=True, skip_query=True)
             elif action:
                 click.confirm(f"Do you want to {action}?", abort=True)
                 for r in response:
-                    if uuid not in r:
-                        click.echo(f"No UUID found, could not {action}.", err=True)
+                    if 'href' not in r:
+                        click.echo(f"No href found, could not {action}.", err=True)
                         sys.exit(1)
-                    with Spinner(text=f"{action.capitalize()} {r[uuid]}"):
-                        getattr(self.get_client_resource(), action)(r[uuid])
+                    uuid = r['href'].split('/')[-1]
+                    with Spinner(text=f"{action.capitalize()} {uuid}"):
+                        getattr(self.get_client_resource(), action)(uuid)
                 with Spinner(text="Querying"):
                     response = self.get_client_resource().get_all(filter_tag)
                 click.echo(self._format_output(response))
