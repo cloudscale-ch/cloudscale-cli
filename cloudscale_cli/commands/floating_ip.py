@@ -35,7 +35,7 @@ def cmd_show(cloudscale, network_id):
     )
 
 @click.option('--ip-version', type=int, default=4, show_default=True)
-@click.option('--server-uuid', '--server', required=True)
+@click.option('--server-uuid', '--server')
 @click.option('--prefix-length', type=int)
 @click.option('--reverse-ptr')
 @click.option('--type', 'scope', type=click.Choice(['regional', 'global']), default='regional', show_default=True)
