@@ -1,7 +1,7 @@
 import sys
 import click
 import jmespath
-from cloudscale import Cloudscale, CloudscaleApiException, CloudscaleException
+from cloudscale import Cloudscale
 from ..util import to_table, to_pretty_json, tags_to_dict
 
 if sys.stdout.isatty():
@@ -23,7 +23,7 @@ class CloudscaleCommand:
                 profile=profile,
                 debug=debug
             )
-        except CloudscaleException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -77,7 +77,7 @@ class CloudscaleCommand:
                 with Spinner(text="Querying"):
                     response = self.get_client_resource().get_all(filter_tag)
                 click.echo(self._format_output(response))
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -86,7 +86,7 @@ class CloudscaleCommand:
             with Spinner(text=f"Querying {uuid}"):
                 response = self.get_client_resource().get_by_uuid(uuid)
             click.echo(self._format_output(response))
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -104,7 +104,7 @@ class CloudscaleCommand:
                 click.echo(self._format_output(response))
             else:
                 return response
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -133,7 +133,7 @@ class CloudscaleCommand:
                 )
                 response = self.get_client_resource().get_by_uuid(uuid=uuid)
             click.echo(self._format_output(response))
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -148,7 +148,7 @@ class CloudscaleCommand:
             with Spinner(text=f"Deleting {uuid}"):
                 self.get_client_resource().delete(uuid)
             click.echo(f"{uuid} deleted!")
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
 
@@ -160,6 +160,6 @@ class CloudscaleCommand:
             with Spinner(text=f"Querying {uuid}"):
                 response = self.get_client_resource().get_by_uuid(uuid)
             click.echo(self._format_output(response))
-        except CloudscaleApiException as e:
+        except Exception as e:
             click.echo(e, err=True)
             sys.exit(1)
