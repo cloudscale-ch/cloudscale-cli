@@ -21,14 +21,16 @@ def server(ctx):
 @click.option('--filter-json')
 @click.option('--action', type=click.Choice(['start', 'stop', 'reboot']))
 @click.option('--delete', is_flag=True)
+@click.option('--force', is_flag=True)
 @server.command("list")
 @click.pass_obj
-def cmd_list(cloudscale, filter_tag, filter_json, action, delete):
+def cmd_list(cloudscale, filter_tag, filter_json, action, delete, force):
     cloudscale.cmd_list(
         filter_tag=filter_tag,
         filter_json=filter_json,
         action=action,
         delete=delete,
+        force=force,
     )
 
 @click.argument('uuid', required=True)
