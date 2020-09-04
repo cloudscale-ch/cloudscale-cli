@@ -15,12 +15,16 @@ def subnet(ctx):
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
+@click.option('--delete', is_flag=True)
+@click.option('--force', is_flag=True)
 @subnet.command("list")
 @click.pass_obj
-def cmd_list(cloudscale, filter_tag, filter_json):
+def cmd_list(cloudscale, filter_tag, filter_json, delete, force):
     cloudscale.cmd_list(
         filter_tag=filter_tag,
         filter_json=filter_json,
+        delete=delete,
+        force=force,
     )
 
 @click.argument('uuid', required=True)
