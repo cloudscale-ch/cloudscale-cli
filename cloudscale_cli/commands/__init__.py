@@ -56,8 +56,8 @@ class CloudscaleCommand:
                 except Exception as e:
                     click.echo(f"filter_json error: {e}", err=True)
                     sys.exit(1)
-            click.echo(self._format_output(response))
             if response:
+                click.echo(self._format_output(response))
                 if delete:
                     if not force:
                         click.confirm(f"Do you want to delete?", abort=True)
