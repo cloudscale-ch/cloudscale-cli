@@ -23,12 +23,16 @@ def to_table(data: list, headers: list) -> str:
     Turn a list into a table
     '''
 
+    formated_headers = []
+
     cols = list()
     for d in data:
         rows = list()
         for header in headers:
             if header not in d:
                 continue
+
+            formated_headers.append(header.upper().replace('_', ' '))
 
             if header == 'tags':
                 row = ', '.join(['%s=%s' % (k, v) for k, v in d[header].items()])
@@ -58,7 +62,7 @@ def to_table(data: list, headers: list) -> str:
             rows.append(row)
         cols.append(rows)
 
-    result = tabulate(cols, headers=headers)
+    result = tabulate(cols, headers=formated_headers)
     return result
 
 def to_pretty_json(data: dict) -> tuple:
