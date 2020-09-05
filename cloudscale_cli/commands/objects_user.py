@@ -9,6 +9,7 @@ def objects_user(ctx):
         'id',
         'tags',
     ]
+    ctx.obj.resource_name_key = 'display_name'
 
 @click.option('--filter-tag')
 @click.option('--filter-json')

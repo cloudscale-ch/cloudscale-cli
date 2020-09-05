@@ -13,6 +13,7 @@ def floating_ip(ctx):
         'region',
         'tags',
     ]
+    ctx.obj.resource_name_key = None
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
