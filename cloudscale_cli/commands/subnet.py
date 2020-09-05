@@ -12,6 +12,7 @@ def subnet(ctx):
         'dns_servers',
         'tags',
     ]
+    ctx.obj.resource_name_key = None
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
