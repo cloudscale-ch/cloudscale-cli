@@ -8,6 +8,7 @@ def server_group(ctx):
         'name',
         'type',
         'servers',
+        'zone',
         'tags',
         'uuid',
     ]

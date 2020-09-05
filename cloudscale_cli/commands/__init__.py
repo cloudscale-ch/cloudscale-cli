@@ -35,6 +35,8 @@ class CloudscaleCommand:
         # Alternate key to look for the resource as 'name'
         self.resource_name_key = 'name'
 
+        self.response_transform_json = None
+
     def get_client_resource(self):
         return getattr(self._client, self.cloud_resource_name)
 
@@ -44,7 +46,7 @@ class CloudscaleCommand:
         else:
             if isinstance(response, dict):
                 response = [response]
-            return to_table(response, self.headers)
+            return to_table(response, self.headers, self.response_transform_json)
 
     def cmd_list(self, filter_tag=None, filter_json=None, action=None, delete=False, force=False):
         if action and delete:

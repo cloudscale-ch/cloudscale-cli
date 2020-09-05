@@ -10,12 +10,30 @@ def server(ctx):
         'name',
         'image',
         'flavor',
-        'zone',
-        'tags',
-        'server_groups',
-        'uuid',
         'status',
+        'zone',
+        'public_ips',
+        'private_ips',
+        'server_groups',
+        'volumes',
+        'tags',
+        'uuid',
     ]
+    ctx.obj.response_transform_json = '''
+        [].{
+            "name": name,
+            "image": image.slug,
+            "flavor": flavor.slug,
+            "tags": tags,
+            "server_groups": server_groups,
+            "volumes": volumes[].name,
+            "public_ips": interfaces[?type=='public'].addresses[].address,
+            "private_ips": interfaces[?type=='private'].addresses[].address,
+            "zone": zone.slug,
+            "status": status,
+            "uuid": uuid
+            }
+    '''
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
