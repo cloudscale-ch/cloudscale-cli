@@ -6,11 +6,21 @@ def objects_user(ctx):
     ctx.obj.cloud_resource_name = "objects_user"
     ctx.obj.headers = [
         'display_name',
-        'id',
         'tags',
+        'access_key',
+        'secret_key',
+        'id',
     ]
     ctx.obj.resource_name_key = 'display_name'
-
+    ctx.obj.response_transform_json = '''
+        [].{
+            "display_name": display_name,
+            "access_key": keys[].access_key,
+            "secret_key": keys[].secret_key,
+            "tags": tags,
+            "id": id
+            }
+    '''
 @click.option('--filter-tag')
 @click.option('--filter-json')
 @click.option('--delete', is_flag=True)
