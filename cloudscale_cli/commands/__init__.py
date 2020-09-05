@@ -162,20 +162,23 @@ class CloudscaleCommand:
                 uuid = results[0]['href'].split('/')[-1]
 
             try:
-                _tags = dict()
-                if not clear_all_tags:
-                    response = self.get_client_resource().get_by_uuid(uuid=uuid)
-                    _tags = response.get('tags', dict()).copy()
+                if any([clear_all_tags, tags, clear_tags]):
+                    _tags = dict()
+                    if not clear_all_tags:
+                        response = self.get_client_resource().get_by_uuid(uuid=uuid)
+                        _tags = response.get('tags', dict()).copy()
+                        for k in clear_tags:
+                            _tags.pop(k, None)
 
-                    for k in clear_tags:
-                        _tags.pop(k, None)
+                    if tags:
+                        try:
+                            _tags.update(tags_to_dict(tags))
+                        except ValueError as e:
+                            click.echo(e, err=True)
+                            sys.exit(1)
+                else:
+                    _tags = None
 
-                if tags:
-                    try:
-                        _tags.update(tags_to_dict(tags))
-                    except ValueError as e:
-                        click.echo(e, err=True)
-                        sys.exit(1)
 
                 with Spinner(text=f"Updating by UUID {uuid}"):
                     self.get_client_resource().update(
