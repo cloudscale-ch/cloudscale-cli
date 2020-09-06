@@ -21,13 +21,15 @@ from .commands.objects_user import objects_user
 @click.option('--profile', '-p', envvar='CLOUDSCALE_PROFILE', help="Profile used in config file.")
 @click.option('--debug', envvar='CLOUDSCALE_DEBUG', is_flag=True, help='Enables debug log output.')
 @click.option('--output', '-o', envvar='CLOUDSCALE_OUTPUT', type=click.Choice(OUTPUT_FORMATS), default="table", help="Output format.", show_default=True)
+@click.option('--verbose', '-v', envvar='CLOUDSCALE_VERBOSE', is_flag=True, help='Verbose output.')
 @click.pass_context
-def cli(ctx, profile, api_token, debug, output):
+def cli(ctx, profile, api_token, debug, output, verbose):
     ctx.obj = CloudscaleCommand(
         api_token=api_token,
         profile=profile,
         debug=debug,
         output=output,
+        verbose=verbose,
     )
 
 
