@@ -5,8 +5,16 @@ import uuid
 @click.group()
 @click.pass_context
 def server(ctx):
-    ctx.obj.cloud_resource_name = "server"
-    ctx.obj.headers = [
+
+    headers = [
+        'name',
+        'status',
+        'zone',
+        'tags',
+        'uuid',
+    ]
+
+    verbose_headers = [
         'name',
         'image',
         'flavor',
@@ -19,6 +27,9 @@ def server(ctx):
         'tags',
         'uuid',
     ]
+
+    ctx.obj.cloud_resource_name = "server"
+    ctx.obj.headers = verbose_headers if ctx.obj.verbose else headers
     ctx.obj.response_transform_json = '''
         [].{
             "name": name,

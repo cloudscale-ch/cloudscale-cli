@@ -16,7 +16,7 @@ OUTPUT_FORMATS = [
 
 class CloudscaleCommand:
 
-    def __init__(self, cloud_resource_name=None, api_token=None, profile=None, debug=False, output="table", headers=[]):
+    def __init__(self, cloud_resource_name=None, api_token=None, profile=None, debug=False, output="table", verbose=False):
         try:
             self._client = Cloudscale(
                 api_token=api_token,
@@ -30,7 +30,8 @@ class CloudscaleCommand:
         self._output = output
 
         self.cloud_resource_name = cloud_resource_name
-        self.headers = headers
+        self.verbose = verbose
+        self.headers = []
 
         # Alternate key to look for the resource as 'name'
         self.resource_name_key = 'name'
