@@ -216,7 +216,7 @@ def cmd_ssh(cloudscale, uuid, interface):
             sys.exit(1)
 
         if len(results) > 1:
-            click.echo(f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Use UUID to update.", err=True)
+            click.echo(f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
             sys.exit(1)
 
     except Exception as e:

@@ -158,7 +158,7 @@ class CloudscaleCommand:
                     sys.exit(1)
 
                 if len(results) > 1:
-                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Use UUID to update.", err=True)
+                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
                     sys.exit(1)
 
                 # Single resource found, remember UUID
@@ -247,7 +247,7 @@ class CloudscaleCommand:
                     sys.exit(1)
 
                 if len(results) > 1:
-                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Use UUID to update.", err=True)
+                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
                     sys.exit(1)
 
                 # Single resource found, remember UUID
