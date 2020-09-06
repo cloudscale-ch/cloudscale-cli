@@ -1,6 +1,9 @@
 import sys
 import click
 import uuid
+import jmespath
+import os
+from cloudscale import CloudscaleApiException
 
 @click.group()
 @click.pass_context
@@ -183,3 +186,50 @@ def cmd_reboot(cloudscale, uuid):
         action="reboot",
         uuid=uuid,
     )
+
+@click.argument('uuid', required=True)
+@click.option('--interface', type=click.Choice(['public', 'private']), default='public', show_default=True)
+@server.command("ssh")
+@click.pass_obj
+def cmd_ssh(cloudscale, uuid, interface):
+    try:
+        response = cloudscale.get_client_resource().get_by_uuid(uuid)
+    except CloudscaleApiException as e:
+        results = cloudscale.cmd_get_by_name(name=uuid)
+        if not results:
+            if cloudscale.resource_name_key:
+                msg = f"No resource found for {cloudscale.cloud_resource_name} having UUID or {cloudscale.resource_name_key}: {uuid}"
+            else:
+                msg = f"No resource found for {cloudscale.cloud_resource_name} having UUID: {uuid}"
+            click.echo(msg, err=True)
+            sys.exit(1)
+
+        if len(results) > 1:
+            click.echo(f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Use UUID to update.", err=True)
+            sys.exit(1)
+
+    except Exception as e:
+        click.echo(e, err=True)
+        sys.exit(1)
+
+    try:
+        response = results[0]
+        filter_json = '''
+            {
+            "public": interfaces[?type=='public'].addresses[0].address,
+            "private": interfaces[?type=='private'].addresses[0].address,
+            "username": image.default_username
+            }
+        '''
+        response = jmespath.search(filter_json, response)
+        for host in response[interface]:
+            ssh_cmd = f"ssh {response['username']}@{host}"
+            os.system(ssh_cmd)
+            break
+        else:
+            click.echo(f"No IP on interface found: {interface}", err=True)
+            sys.exit(1)
+
+    except Exception as e:
+        click.echo(e, err=True)
+        sys.exit(1)
