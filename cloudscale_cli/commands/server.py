@@ -54,15 +54,17 @@ def server(ctx):
 @click.option('--action', type=click.Choice(['start', 'stop', 'reboot']))
 @click.option('--delete', is_flag=True)
 @click.option('--force', is_flag=True)
+@click.option('--wait', is_flag=True)
 @server.command("list")
 @click.pass_obj
-def cmd_list(cloudscale, filter_tag, filter_json, action, delete, force):
+def cmd_list(cloudscale, filter_tag, filter_json, action, delete, force, wait):
     cloudscale.cmd_list(
         filter_tag=filter_tag,
         filter_json=filter_json,
         action=action,
         delete=delete,
         force=force,
+        wait=wait,
     )
 
 @click.argument('uuid', required=True)
@@ -89,6 +91,7 @@ def cmd_show(cloudscale, uuid):
 @click.option('--server-group', 'server_groups', multiple=True)
 @click.option('--user-data')
 @click.option('--tag', 'tags', multiple=True)
+@click.option('--wait', is_flag=True, help="Wait for status is running.")
 @server.command("create")
 @click.pass_obj
 def cmd_create(
@@ -109,6 +112,7 @@ def cmd_create(
     user_data,
     tags,
     count,
+    wait,
 ):
     servers_created = list()
     while len(servers_created) < count:
@@ -139,6 +143,15 @@ def cmd_create(
             tags=tags,
         )
         servers_created.append(s)
+
+    if wait:
+        _tmp = []
+        for i, server_created in enumerate(servers_created):
+            s = cloudscale.wait_for_status(server_created['uuid'])
+            _tmp.append(s)
+
+        servers_created = _tmp
+
     click.echo(cloudscale._format_output(servers_created))
 
 @click.argument('uuid', required=True)
@@ -148,9 +161,10 @@ def cmd_create(
 @click.option('--tag', 'tags', multiple=True)
 @click.option('--clear-tag', 'clear_tags', multiple=True)
 @click.option('--clear-all-tags', is_flag=True)
+@click.option('--wait', is_flag=True, help="Wait for changes applied.")
 @server.command("update")
 @click.pass_obj
-def cmd_update(cloudscale, uuid, name, flavor, interfaces, tags, clear_tags, clear_all_tags):
+def cmd_update(cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tags, clear_all_tags):
     cloudscale.cmd_update(
         uuid=uuid,
         tags=tags,
@@ -159,6 +173,7 @@ def cmd_update(cloudscale, uuid, name, flavor, interfaces, tags, clear_tags, cle
         name=name,
         flavor=flavor,
         interfaces=interfaces or None,
+        wait=wait,
     )
 
 @click.argument('uuid', required=True)
@@ -172,30 +187,36 @@ def cmd_delete(cloudscale, uuid, force):
     )
 
 @click.argument('uuid', required=True)
+@click.option('--wait', is_flag=True, help="Wait for status is running.")
 @server.command("start")
 @click.pass_obj
-def cmd_start(cloudscale, uuid):
+def cmd_start(cloudscale, uuid, wait):
     cloudscale.cmd_act(
         action="start",
         uuid=uuid,
+        wait=wait,
     )
 
 @click.argument('uuid', required=True)
+@click.option('--wait', is_flag=True, help="Wait for status is stopped.")
 @server.command("stop")
 @click.pass_obj
-def cmd_stop(cloudscale, uuid):
+def cmd_stop(cloudscale, uuid, wait):
     cloudscale.cmd_act(
         action="stop",
         uuid=uuid,
+        wait=wait,
     )
 
 @click.argument('uuid', required=True)
+@click.option('--wait', is_flag=True, help="Wait for status is running.")
 @server.command("reboot")
 @click.pass_obj
-def cmd_reboot(cloudscale, uuid):
+def cmd_reboot(cloudscale, uuid, wait):
     cloudscale.cmd_act(
         action="reboot",
         uuid=uuid,
+        wait=wait,
     )
 
 @click.argument('uuid', required=True)
