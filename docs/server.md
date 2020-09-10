@@ -2,20 +2,32 @@
 
 ## Create Servers
 
+See available flavors:
+
+~~~shell
+cloudscale flavor list
+~~~
+
+and images:
+
+~~~shell
+cloudscale image list
+~~~
+
 Create one server:
 
 ~~~shell
 cloudscale server create \
---name my-server \
 --flavor flex-2 \
 --image centos-7 \
+--name my-server \
 --ssh-key "$(cat ~/.ssh/id_rsa.pub)"
 ~~~
 
 Create up to 10 servers in a row with `--count`:
 
 !!! tip
-    When using `--count`, the option `--name` allows to use string format syntax with 2 special variables:
+    The option `--name` allows to use string format syntax with 2 special variables:
 
     - `counter`: A number representing the current interation while creating multiple servers.
     - `uid`: A random 8 char/number long string.
@@ -29,12 +41,15 @@ Create up to 10 servers in a row with `--count`:
 
 ~~~shell
 cloudscale server create \
---name 'my-server-{uid}' \
 --flavor flex-2 \
 --image centos-7 \
 --ssh-key "$(cat ~/.ssh/id_rsa.pub)" \
+--name 'my-server-{counter}' \
 --count 10
 ~~~
+
+!!! tip
+    To ensure all servers created have booted and are running by providing the option `--wait`.
 
 ## List Servers
 
@@ -131,18 +146,26 @@ server list \
 
 ## Server Actions
 
+### SSH into to a Server
+
+SSH into a server via its public IP:
+
+~~~shell
+cloudscale server ssh <uuid or unique name>
+~~~
+
 ### Stop a Server
 
 Stop a server:
 
 ~~~shell
-cloudscale server stop <uuid>
+cloudscale server stop <uuid or unique name>
 ~~~
 
 ### Start a Server
 
 ~~~shell
-cloudscale server start <uuid>
+cloudscale server start <uuid or unique name>
 ~~~
 
 ### Delete a Server
@@ -150,11 +173,11 @@ cloudscale server start <uuid>
 With prompt:
 
 ~~~shell
-cloudscale server delete <uuid>
+cloudscale server delete <uuid or unique name>
 ~~~
 
 Just delete without questions asked:
 
 ~~~shell
-cloudscale server delete --force <uuid>
+cloudscale server delete --force <uuid or unique name>
 ~~~
