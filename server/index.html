@@ -293,6 +293,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#ssh-into-to-a-server" class="md-nav__link">
+    SSH into to a Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stop-a-server" class="md-nav__link">
     Stop a Server
   </a>
@@ -415,6 +422,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#ssh-into-to-a-server" class="md-nav__link">
+    SSH into to a Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stop-a-server" class="md-nav__link">
     Stop a Server
   </a>
@@ -462,11 +476,21 @@
                 
                 <h1 id="server-usage-examples">Server Usage Examples</h1>
 <h2 id="create-servers">Create Servers</h2>
+<p>See available flavors:</p>
+<div class="codehilite"><pre><span></span><code>cloudscale flavor list
+</code></pre></div>
+
+
+<p>and images:</p>
+<div class="codehilite"><pre><span></span><code>cloudscale image list
+</code></pre></div>
+
+
 <p>Create one server:</p>
 <div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
---name my-server <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
+--name my-server <span class="se">\</span>
 --ssh-key <span class="s2">&quot;</span><span class="k">$(</span>cat ~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span>
 </code></pre></div>
 
@@ -474,7 +498,7 @@
 <p>Create up to 10 servers in a row with <code>--count</code>:</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>When using <code>--count</code>, the option <code>--name</code> allows to use string format syntax with 2 special variables:</p>
+<p>The option <code>--name</code> allows to use string format syntax with 2 special variables:</p>
 <ul>
 <li><code>counter</code>: A number representing the current interation while creating multiple servers.</li>
 <li><code>uid</code>: A random 8 char/number long string.</li>
@@ -488,14 +512,18 @@
 </ul>
 </div>
 <div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
---name <span class="s1">&#39;my-server-{uid}&#39;</span> <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
 --ssh-key <span class="s2">&quot;</span><span class="k">$(</span>cat ~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+--name <span class="s1">&#39;my-server-{counter}&#39;</span> <span class="se">\</span>
 --count <span class="m">10</span>
 </code></pre></div>
 
 
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To ensure all servers created have booted and are running by providing the option <code>--wait</code>.</p>
+</div>
 <h2 id="list-servers">List Servers</h2>
 <p>Get a list as table view:</p>
 <div class="codehilite"><pre><span></span><code>cloudscale server list
@@ -578,25 +606,31 @@ server list <span class="se">\</span>
 
 
 <h2 id="server-actions">Server Actions</h2>
+<h3 id="ssh-into-to-a-server">SSH into to a Server</h3>
+<p>SSH into a server via its public IP:</p>
+<div class="codehilite"><pre><span></span><code>cloudscale server ssh &lt;uuid or unique name&gt;
+</code></pre></div>
+
+
 <h3 id="stop-a-server">Stop a Server</h3>
 <p>Stop a server:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid or unique name&gt;
 </code></pre></div>
 
 
 <h3 id="start-a-server">Start a Server</h3>
-<div class="codehilite"><pre><span></span><code>cloudscale server start &lt;uuid&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server start &lt;uuid or unique name&gt;
 </code></pre></div>
 
 
 <h3 id="delete-a-server">Delete a Server</h3>
 <p>With prompt:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid or unique name&gt;
 </code></pre></div>
 
 
 <p>Just delete without questions asked:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid or unique name&gt;
 </code></pre></div>
                 
               
