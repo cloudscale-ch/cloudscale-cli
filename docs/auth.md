@@ -1,8 +1,14 @@
 # Authentication
 
+There are 3 ways to configure the authentication:
+
+- Using a config file
+- Using the `--api-token` parameter
+- Using the environment variable `CLOUDSCALE_API_TOKEN`
+
 ## Config File with Profiles
 
-Creating an ini file in your `$XDG_CONFIG_HOME/cloudscale/cloudscale.ini`, `.cloudscale.ini` (leading dot) in your `$HOME` or a `cloudscale.ini` (without leading dot) in the `CWD` with the following schema:
+Create an ini file in your `$XDG_CONFIG_HOME/cloudscale/cloudscale.ini`, `.cloudscale.ini` (leading dot) in your `$HOME` or a `cloudscale.ini` (without leading dot) in the `CWD` with the following schema:
 
 ~~~ini
 [default]
@@ -31,7 +37,7 @@ cloudscale --profile production server list
 
 ## Command Line Argument
 
-Passing the `--api-token` parameter:
+Use the `--api-token` parameter:
 
 ~~~shell
 cloudscale --api-token <your_token> server create ...
@@ -39,7 +45,7 @@ cloudscale --api-token <your_token> server create ...
 
 ## By Evironment Variable
 
-Using the ENV `CLOUDSCALE_API_TOKEN` variable:
+Use the ENV `CLOUDSCALE_API_TOKEN` variable:
 
 ~~~shell
 export CLOUDSCALE_API_TOKEN=<your token>
