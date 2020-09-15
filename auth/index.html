@@ -367,8 +367,14 @@
                 
                 
                 <h1 id="authentication">Authentication</h1>
+<p>There are 3 ways to configure the authentication:</p>
+<ul>
+<li>Using a config file</li>
+<li>Using the <code>--api-token</code> parameter</li>
+<li>Using the environment variable <code>CLOUDSCALE_API_TOKEN</code></li>
+</ul>
 <h2 id="config-file-with-profiles">Config File with Profiles</h2>
-<p>Creating an ini file in your <code>$XDG_CONFIG_HOME/cloudscale/cloudscale.ini</code>, <code>.cloudscale.ini</code> (leading dot) in your <code>$HOME</code> or a <code>cloudscale.ini</code> (without leading dot) in the <code>CWD</code> with the following schema:</p>
+<p>Create an ini file in your <code>$XDG_CONFIG_HOME/cloudscale/cloudscale.ini</code>, <code>.cloudscale.ini</code> (leading dot) in your <code>$HOME</code> or a <code>cloudscale.ini</code> (without leading dot) in the <code>CWD</code> with the following schema:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">[default]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 </code></pre></div>
@@ -393,13 +399,13 @@
 
 
 <h2 id="command-line-argument">Command Line Argument</h2>
-<p>Passing the <code>--api-token</code> parameter:</p>
+<p>Use the <code>--api-token</code> parameter:</p>
 <div class="codehilite"><pre><span></span><code>cloudscale --api-token &lt;your_token&gt; server create ...
 </code></pre></div>
 
 
 <h2 id="by-evironment-variable">By Evironment Variable</h2>
-<p>Using the ENV <code>CLOUDSCALE_API_TOKEN</code> variable:</p>
+<p>Use the ENV <code>CLOUDSCALE_API_TOKEN</code> variable:</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_API_TOKEN</span><span class="o">=</span>&lt;your token&gt;
 cloudscale flavor list
 </code></pre></div>
