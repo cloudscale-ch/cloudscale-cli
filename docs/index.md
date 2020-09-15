@@ -13,6 +13,9 @@ pipx install cloudscale-cli
 cloudscale --version
 ~~~
 
+!!! note
+    The `PATH` variable may need to be extended. You should get a hint while installing it.
+
 ## Usage
 
 ~~~shell
