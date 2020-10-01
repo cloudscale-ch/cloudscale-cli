@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -18,12 +18,12 @@ REGION_RESP = {
 def test_region_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/regions',
+        CLOUDSCALE_API_URL + '/regions',
         json=[REGION_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/regions',
+        CLOUDSCALE_API_URL + '/regions',
         json={},
         status=500)
 

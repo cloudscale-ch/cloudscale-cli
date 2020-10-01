@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -23,12 +23,12 @@ FLAVOR_RESP = {
 def test_flavor_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/flavors',
+        CLOUDSCALE_API_URL + '/flavors',
         json=[FLAVOR_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/flavors',
+        CLOUDSCALE_API_URL + '/flavors',
         json={},
         status=500)
 

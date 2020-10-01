@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -23,12 +23,12 @@ IMAGE_RESP = {
 def test_image_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/images',
+        CLOUDSCALE_API_URL + '/images',
         json=[IMAGE_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/images',
+        CLOUDSCALE_API_URL + '/images',
         json={},
         status=500)
 
