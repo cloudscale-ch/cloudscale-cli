@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -28,12 +28,12 @@ SERVER_RESP = {
 def test_server_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers',
+        CLOUDSCALE_API_URL + '/servers',
         json=[SERVER_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers',
+        CLOUDSCALE_API_URL + '/servers',
         json={
             "detail": "Server error."
         },
@@ -59,7 +59,7 @@ def test_server_get_all():
 def test_server_get_all_fitlered():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers',
+        CLOUDSCALE_API_URL + '/servers',
         json=[SERVER_RESP],
         status=200)
 
@@ -88,12 +88,12 @@ def test_server_get_by_uuid():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json={
             "detail": "Server error."
         },
@@ -120,21 +120,21 @@ def test_server_delete():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/unknown',
+        CLOUDSCALE_API_URL + '/servers/unknown',
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         status=204)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/servers/unknown',
+        CLOUDSCALE_API_URL + '/servers/unknown',
         json={
             "detail": "Not found."
         },
@@ -182,12 +182,12 @@ def test_server_create():
 
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers',
+        CLOUDSCALE_API_URL + '/servers',
         json=SERVER_RESP,
         status=201)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers',
+        CLOUDSCALE_API_URL + '/servers',
         json={
             "detail": "Server error."
         },
@@ -225,17 +225,17 @@ def test_server_update():
     name = "db-master"
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json={
             "detail": "Server error."
         },
@@ -270,16 +270,16 @@ def test_server_start():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/start',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/start',
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/start',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/start',
         json={
             "detail": "Server error."
         },
@@ -306,16 +306,16 @@ def test_server_stop():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/stop',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/stop',
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/stop',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/stop',
         json={
             "detail": "Server error."
         },
@@ -342,16 +342,16 @@ def test_server_reboot():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/reboot',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/reboot',
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid,
+        CLOUDSCALE_API_URL + '/servers/' + uuid,
         json=SERVER_RESP,
         status=200)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/servers/' + uuid + '/reboot',
+        CLOUDSCALE_API_URL + '/servers/' + uuid + '/reboot',
         json={
             "detail": "Server error."
         },

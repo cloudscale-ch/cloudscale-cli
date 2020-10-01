@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -31,12 +31,12 @@ SERVER_GROUP_RESP = {
 def test_server_groups_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups',
+        CLOUDSCALE_API_URL + '/server-groups',
         json=[SERVER_GROUP_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups',
+        CLOUDSCALE_API_URL + '/server-groups',
         json={},
         status=500)
 
@@ -63,12 +63,12 @@ def test_server_groups_get_by_uuid():
     uuid = "e3b63018-fad6-45f2-9f57-3ea0da726d8c"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json={},
         status=500)
 
@@ -94,21 +94,21 @@ def test_server_groups_delete():
     uuid = "e3b63018-fad6-45f2-9f57-3ea0da726d8c"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/unknown',
+        CLOUDSCALE_API_URL + '/server-groups/unknown',
         json=SERVER_GROUP_RESP,
         status=200)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         status=204)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/unknown',
+        CLOUDSCALE_API_URL + '/server-groups/unknown',
         json={
             "detail": "Not found."
         },
@@ -144,12 +144,12 @@ def test_server_groups_create():
     name = "load balancers"
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups',
+        CLOUDSCALE_API_URL + '/server-groups',
         json=SERVER_GROUP_RESP,
         status=201)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups',
+        CLOUDSCALE_API_URL + '/server-groups',
         json=SERVER_GROUP_RESP,
         status=500)
 
@@ -177,17 +177,17 @@ def test_server_groups_update():
     name = "load balancers"
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=200)
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json={},
         status=500)
 
@@ -226,7 +226,7 @@ def test_invalid_tags_create():
     name = "load balancers"
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups',
+        CLOUDSCALE_API_URL + '/server-groups',
         json=SERVER_GROUP_RESP,
         status=201)
 
@@ -273,12 +273,12 @@ def test_invalid_tags_update():
     name = "load balancers"
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/server-groups/' + uuid,
+        CLOUDSCALE_API_URL + '/server-groups/' + uuid,
         json=SERVER_GROUP_RESP,
         status=200)
 

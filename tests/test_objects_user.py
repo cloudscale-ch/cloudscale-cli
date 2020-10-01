@@ -1,4 +1,4 @@
-from cloudscale import CLOUDSCALE_API_ENDPOINT
+from cloudscale import CLOUDSCALE_API_URL
 from cloudscale_cli.cli import cli
 import responses
 import click
@@ -23,17 +23,17 @@ OBJECTS_USER_RESP = {
 def test_objects_user_get_all():
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json=[OBJECTS_USER_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users?tag:project=apollo',
+        CLOUDSCALE_API_URL + '/objects-users?tag:project=apollo',
         json=[OBJECTS_USER_RESP],
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json={},
         status=500)
 
@@ -67,12 +67,12 @@ def test_objects_user_get_by_uuid():
     uuid = "6fe39134bf4178747eebc429f82cfafdd08891d4279d0d899bc4012db1db6a15"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/' + uuid,
+        CLOUDSCALE_API_URL + '/objects-users/' + uuid,
         json=OBJECTS_USER_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/unknown',
+        CLOUDSCALE_API_URL + '/objects-users/unknown',
         json={},
         status=404)
 
@@ -98,21 +98,21 @@ def test_objects_user_delete():
     uuid = "6fe39134bf4178747eebc429f82cfafdd08891d4279d0d899bc4012db1db6a15"
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/' + uuid,
+        CLOUDSCALE_API_URL + '/objects-users/' + uuid,
         json=OBJECTS_USER_RESP,
         status=200)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/unknown',
+        CLOUDSCALE_API_URL + '/objects-users/unknown',
         json=OBJECTS_USER_RESP,
         status=200)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/' + uuid,
+        CLOUDSCALE_API_URL + '/objects-users/' + uuid,
         status=204)
     responses.add(
         responses.DELETE,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/unknown',
+        CLOUDSCALE_API_URL + '/objects-users/unknown',
         json={},
         status=404)
 
@@ -147,22 +147,22 @@ def test_objects_user_create():
 
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json=OBJECTS_USER_RESP,
         status=201)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json={},
         status=500)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json=OBJECTS_USER_RESP,
         status=201)
     responses.add(
         responses.POST,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users',
+        CLOUDSCALE_API_URL + '/objects-users',
         json={},
         status=500)
 
@@ -190,17 +190,17 @@ def test_objects_user_update():
     display_name = "alan"
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/' + uuid,
+        CLOUDSCALE_API_URL + '/objects-users/' + uuid,
         json=OBJECTS_USER_RESP,
         status=204)
     responses.add(
         responses.GET,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/' + uuid,
+        CLOUDSCALE_API_URL + '/objects-users/' + uuid,
         json=OBJECTS_USER_RESP,
         status=200)
     responses.add(
         responses.PATCH,
-        CLOUDSCALE_API_ENDPOINT + '/objects-users/unknown',
+        CLOUDSCALE_API_URL + '/objects-users/unknown',
         json={},
         status=404)
 
