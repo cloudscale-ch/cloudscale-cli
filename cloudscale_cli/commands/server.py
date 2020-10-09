@@ -240,12 +240,13 @@ def cmd_ssh(cloudscale, uuid, interface):
             click.echo(f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
             sys.exit(1)
 
+        response = results[0]
+
     except Exception as e:
         click.echo(e, err=True)
         sys.exit(1)
 
     try:
-        response = results[0]
         filter_json = '''
             {
             "public": interfaces[?type=='public'].addresses[0].address,
