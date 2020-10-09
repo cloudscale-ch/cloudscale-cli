@@ -35,7 +35,7 @@ setup(
     packages=find_packages(exclude=["test.*", "tests"]),
     classifiers=[
         "Intended Audience :: System Administrators",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
