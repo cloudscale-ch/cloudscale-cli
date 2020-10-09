@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -11,7 +9,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
     
     
       
@@ -19,19 +17,21 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
-      
-        <link rel="stylesheet" href="../assets/stylesheets/palette.6a5ad368.min.css">
-      
+      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
       
         
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
         
-        <meta name="theme-color" content="#ffffff">
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -49,9 +49,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="">
-  
     
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="">
+      
+  
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -141,8 +143,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -184,7 +184,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Home
     </a>
   </li>
@@ -196,7 +196,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../autocompletion/" title="Autocompletion" class="md-nav__link">
+    <a href="../autocompletion/" class="md-nav__link">
       Autocompletion
     </a>
   </li>
@@ -221,7 +221,7 @@
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Authentication" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Authentication
     </a>
     
@@ -272,7 +272,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../server/" title="Server Usages" class="md-nav__link">
+    <a href="../server/" class="md-nav__link">
       Server Usages
     </a>
   </li>
@@ -284,7 +284,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tags/" title="Working with Tags" class="md-nav__link">
+    <a href="../tags/" class="md-nav__link">
       Working with Tags
     </a>
   </li>
@@ -296,7 +296,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../debug/" title="Debugging" class="md-nav__link">
+    <a href="../debug/" class="md-nav__link">
       Debugging
     </a>
   </li>
@@ -363,9 +363,6 @@
                   </a>
                 
                 
-                  
-                
-                
                 <h1 id="authentication">Authentication</h1>
 <p>There are 3 ways to configure the authentication:</p>
 <ul>
@@ -375,38 +372,33 @@
 </ul>
 <h2 id="config-file-with-profiles">Config File with Profiles</h2>
 <p>Create an ini file in your <code>$XDG_CONFIG_HOME/cloudscale/cloudscale.ini</code>, <code>.cloudscale.ini</code> (leading dot) in your <code>$HOME</code> or a <code>cloudscale.ini</code> (without leading dot) in the <code>CWD</code> with the following schema:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">[default]</span>
+<div class="ini codehilite"><pre><span></span><code><span class="k">[default]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 </code></pre></div>
 
-
 <p>The default profile taken if available is <code>default</code>. The profile can be chosen by passing <code>--profile</code> or <code>CLOUDSCALE_PROFILE</code> ENV variable.</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_PROFILE</span><span class="o">=</span>staging
+<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_PROFILE</span><span class="o">=</span>staging
 </code></pre></div>
 
-
-<div class="codehilite"><pre><span></span><code><span class="k">[production]</span>
+<div class="ini codehilite"><pre><span></span><code><span class="k">[production]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 
 <span class="k">[staging]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 </code></pre></div>
 
-
 <p>Passing the command line option will overwrite the ENV var as one would expect:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale --profile production server list
+<div class="shell codehilite"><pre><span></span><code>cloudscale --profile production server list
 </code></pre></div>
-
 
 <h2 id="command-line-argument">Command Line Argument</h2>
 <p>Use the <code>--api-token</code> parameter:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale --api-token &lt;your_token&gt; server create ...
+<div class="shell codehilite"><pre><span></span><code>cloudscale --api-token &lt;your_token&gt; server create ...
 </code></pre></div>
-
 
 <h2 id="by-evironment-variable">By Evironment Variable</h2>
 <p>Use the ENV <code>CLOUDSCALE_API_TOKEN</code> variable:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_API_TOKEN</span><span class="o">=</span>&lt;your token&gt;
+<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_API_TOKEN</span><span class="o">=</span>&lt;your token&gt;
 cloudscale flavor list
 </code></pre></div>
                 
@@ -427,7 +419,7 @@ cloudscale flavor list
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../autocompletion/" title="Autocompletion" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../autocompletion/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -442,7 +434,7 @@ cloudscale flavor list
           </a>
         
         
-          <a href="../server/" title="Server Usages" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../server/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -475,15 +467,15 @@ cloudscale flavor list
       
     </div>
     
-      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

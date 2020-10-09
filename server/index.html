@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -11,7 +9,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
     
     
       
@@ -19,19 +17,21 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
-      
-        <link rel="stylesheet" href="../assets/stylesheets/palette.6a5ad368.min.css">
-      
+      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
       
         
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
         
-        <meta name="theme-color" content="#ffffff">
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -49,9 +49,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="">
-  
     
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="">
+      
+  
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -141,8 +143,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -184,7 +184,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Home
     </a>
   </li>
@@ -196,7 +196,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../autocompletion/" title="Autocompletion" class="md-nav__link">
+    <a href="../autocompletion/" class="md-nav__link">
       Autocompletion
     </a>
   </li>
@@ -208,7 +208,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../auth/" title="Authentication" class="md-nav__link">
+    <a href="../auth/" class="md-nav__link">
       Authentication
     </a>
   </li>
@@ -233,7 +233,7 @@
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Server Usages" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Server Usages
     </a>
     
@@ -338,7 +338,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tags/" title="Working with Tags" class="md-nav__link">
+    <a href="../tags/" class="md-nav__link">
       Working with Tags
     </a>
   </li>
@@ -350,7 +350,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../debug/" title="Debugging" class="md-nav__link">
+    <a href="../debug/" class="md-nav__link">
       Debugging
     </a>
   </li>
@@ -471,29 +471,23 @@
                   </a>
                 
                 
-                  
-                
-                
                 <h1 id="server-usage-examples">Server Usage Examples</h1>
 <h2 id="create-servers">Create Servers</h2>
 <p>See available flavors:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale flavor list
+<div class="shell codehilite"><pre><span></span><code>cloudscale flavor list
 </code></pre></div>
-
 
 <p>and images:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale image list
+<div class="shell codehilite"><pre><span></span><code>cloudscale image list
 </code></pre></div>
 
-
 <p>Create one server:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
 --name my-server <span class="se">\</span>
 --ssh-key <span class="s2">&quot;</span><span class="k">$(</span>cat ~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span>
 </code></pre></div>
-
 
 <p>Create up to 10 servers in a row with <code>--count</code>:</p>
 <div class="admonition tip">
@@ -511,7 +505,7 @@
 <li>Combinations: <code>--name 'server-{uid}-{counter:02d}.example.com'</code></li>
 </ul>
 </div>
-<div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
 --ssh-key <span class="s2">&quot;</span><span class="k">$(</span>cat ~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
@@ -519,51 +513,44 @@
 --count <span class="m">10</span>
 </code></pre></div>
 
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>To ensure all servers created have booted and are running by providing the option <code>--wait</code>.</p>
 </div>
 <h2 id="list-servers">List Servers</h2>
 <p>Get a list as table view:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list
 </code></pre></div>
-
 
 <p>Get a list as JSON response:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale -o json server list
+<div class="shell codehilite"><pre><span></span><code>cloudscale -o json server list
 </code></pre></div>
-
 
 <h3 id="filter-by-tag">Filter by Tag</h3>
 <p>List servers having the tag project with value gemini:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-tag <span class="nv">project</span><span class="o">=</span>gemini
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-tag <span class="nv">project</span><span class="o">=</span>gemini
 </code></pre></div>
-
 
 <p>List servers having a tag project:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-tag project
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-tag project
 </code></pre></div>
-
 
 <h3 id="filter-by-json-query">Filter by JSON Query</h3>
 <p>Get a list of stopped servers:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span>
 </code></pre></div>
-
 
 <p>Get a list of stopped servers having tag <code>project=demo</code> and start them after accepting:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --action start
 ...
 Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
-
 
 <p>Start a list of stopped servers after accepting having tag <code>project=demo</code>:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --action start
@@ -571,9 +558,8 @@ Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
 
-
 <p>Delete a list of stopped servers after accepting having tag <code>project=demo</code>:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --delete
@@ -581,9 +567,8 @@ Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 Do you want to delete? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
 
-
 <p>Get a simplified custom JSON list of stopped servers in profile <code>production</code>:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale <span class="se">\</span>
+<div class="shell codehilite"><pre><span></span><code>cloudscale <span class="se">\</span>
 --output json <span class="se">\</span>
 --profile production <span class="se">\</span>
 server list <span class="se">\</span>
@@ -604,33 +589,28 @@ server list <span class="se">\</span>
 <span class="o">]</span>
 </code></pre></div>
 
-
 <h2 id="server-actions">Server Actions</h2>
 <h3 id="ssh-into-to-a-server">SSH into to a Server</h3>
 <p>SSH into a server via its public IP:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server ssh &lt;uuid or unique name&gt;
+<div class="shell codehilite"><pre><span></span><code>cloudscale server ssh &lt;uuid or unique name&gt;
 </code></pre></div>
-
 
 <h3 id="stop-a-server">Stop a Server</h3>
 <p>Stop a server:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid or unique name&gt;
+<div class="shell codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid or unique name&gt;
 </code></pre></div>
-
 
 <h3 id="start-a-server">Start a Server</h3>
-<div class="codehilite"><pre><span></span><code>cloudscale server start &lt;uuid or unique name&gt;
+<div class="shell codehilite"><pre><span></span><code>cloudscale server start &lt;uuid or unique name&gt;
 </code></pre></div>
-
 
 <h3 id="delete-a-server">Delete a Server</h3>
 <p>With prompt:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid or unique name&gt;
+<div class="shell codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid or unique name&gt;
 </code></pre></div>
 
-
 <p>Just delete without questions asked:</p>
-<div class="codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid or unique name&gt;
+<div class="shell codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid or unique name&gt;
 </code></pre></div>
                 
               
@@ -650,7 +630,7 @@ server list <span class="se">\</span>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../auth/" title="Authentication" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../auth/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -665,7 +645,7 @@ server list <span class="se">\</span>
           </a>
         
         
-          <a href="../tags/" title="Working with Tags" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tags/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -698,15 +678,15 @@ server list <span class="se">\</span>
       
     </div>
     
-      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
