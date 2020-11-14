@@ -228,3 +228,41 @@ def test_volume_missing_api_key():
         'list',
     ])
     assert result.exit_code == 1
+
+def test_volume_error_detach_server_uuids_mutually_exclusive():
+    uuid = "2db69ba3-1864-4608-853a-0771b6885a3a"
+    server_uuids = "2db69ba3-1864-4608-853a-0771b6885a3a"
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        '-a', 'token',
+        'volume',
+        'update',
+        uuid,
+        '--detach',
+        '--server-uuids',
+        server_uuids,
+    ])
+    assert result.exit_code == 1
+
+@responses.activate
+def test_volume_detach():
+    uuid = "2db69ba3-1864-4608-853a-0771b6885a3a"
+    responses.add(
+        responses.PATCH,
+        CLOUDSCALE_API_URL + '/volumes/' + uuid,
+        json=VOLUME_RESP,
+        status=204)
+    responses.add(
+        responses.GET,
+        CLOUDSCALE_API_URL + '/volumes/' + uuid,
+        json=VOLUME_RESP,
+        status=200)
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        '-a', 'token',
+        'volume',
+        'update',
+        uuid,
+        '--detach',
+    ])
+    assert result.exit_code == 0

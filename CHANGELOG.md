@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## v1.1.0 (unreleased)
+
+### Minor changes
+
+- cloudscale-sdk updated to 0.5.0.
+- Add option `--detach` for volumes to detach.
+
 ## v1.0.1 (2020-10-09)
 
 Maintenance release.
