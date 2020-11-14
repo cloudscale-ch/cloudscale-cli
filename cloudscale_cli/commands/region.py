@@ -5,9 +5,6 @@ import click
 def region(ctx):
     ctx.obj.cloud_resource_name = "region"
     ctx.obj.headers = [
-        'name',
-        'vcpu_count',
-        'memory_gb',
         'slug',
         'zones',
     ]
