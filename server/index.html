@@ -8,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
     
     
       
@@ -17,10 +18,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.358818c7.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -69,7 +70,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="cloudscale.ch CLI" class="md-header-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -153,7 +156,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="cloudscale.ch CLI" class="md-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -474,15 +479,15 @@
                 <h1 id="server-usage-examples">Server Usage Examples</h1>
 <h2 id="create-servers">Create Servers</h2>
 <p>See available flavors:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale flavor list
+<div class="codehilite"><pre><span></span><code>cloudscale flavor list
 </code></pre></div>
 
 <p>and images:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale image list
+<div class="codehilite"><pre><span></span><code>cloudscale image list
 </code></pre></div>
 
 <p>Create one server:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
 --name my-server <span class="se">\</span>
@@ -505,7 +510,7 @@
 <li>Combinations: <code>--name 'server-{uid}-{counter:02d}.example.com'</code></li>
 </ul>
 </div>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server create <span class="se">\</span>
 --flavor flex-2 <span class="se">\</span>
 --image centos-7 <span class="se">\</span>
 --ssh-key <span class="s2">&quot;</span><span class="k">$(</span>cat ~/.ssh/id_rsa.pub<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
@@ -519,29 +524,29 @@
 </div>
 <h2 id="list-servers">List Servers</h2>
 <p>Get a list as table view:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list
+<div class="codehilite"><pre><span></span><code>cloudscale server list
 </code></pre></div>
 
 <p>Get a list as JSON response:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale -o json server list
+<div class="codehilite"><pre><span></span><code>cloudscale -o json server list
 </code></pre></div>
 
 <h3 id="filter-by-tag">Filter by Tag</h3>
 <p>List servers having the tag project with value gemini:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-tag <span class="nv">project</span><span class="o">=</span>gemini
+<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-tag <span class="nv">project</span><span class="o">=</span>gemini
 </code></pre></div>
 
 <p>List servers having a tag project:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-tag project
+<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-tag project
 </code></pre></div>
 
 <h3 id="filter-by-json-query">Filter by JSON Query</h3>
 <p>Get a list of stopped servers:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server list --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span>
 </code></pre></div>
 
 <p>Get a list of stopped servers having tag <code>project=demo</code> and start them after accepting:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --action start
@@ -550,7 +555,7 @@ Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
 
 <p>Start a list of stopped servers after accepting having tag <code>project=demo</code>:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --action start
@@ -559,7 +564,7 @@ Do you want to start? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
 
 <p>Delete a list of stopped servers after accepting having tag <code>project=demo</code>:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale server list <span class="se">\</span>
 --filter-tag <span class="nv">project</span><span class="o">=</span>demo <span class="se">\</span>
 --filter-json <span class="s1">&#39;[?status == `stopped`]&#39;</span> <span class="se">\</span>
 --delete
@@ -568,7 +573,7 @@ Do you want to delete? <span class="o">[</span>y/N<span class="o">]</span>:
 </code></pre></div>
 
 <p>Get a simplified custom JSON list of stopped servers in profile <code>production</code>:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>cloudscale <span class="se">\</span>
 --output json <span class="se">\</span>
 --profile production <span class="se">\</span>
 server list <span class="se">\</span>
@@ -592,25 +597,25 @@ server list <span class="se">\</span>
 <h2 id="server-actions">Server Actions</h2>
 <h3 id="ssh-into-to-a-server">SSH into to a Server</h3>
 <p>SSH into a server via its public IP:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server ssh &lt;uuid or unique name&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server ssh &lt;uuid or unique name&gt;
 </code></pre></div>
 
 <h3 id="stop-a-server">Stop a Server</h3>
 <p>Stop a server:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid or unique name&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server stop &lt;uuid or unique name&gt;
 </code></pre></div>
 
 <h3 id="start-a-server">Start a Server</h3>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server start &lt;uuid or unique name&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server start &lt;uuid or unique name&gt;
 </code></pre></div>
 
 <h3 id="delete-a-server">Delete a Server</h3>
 <p>With prompt:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid or unique name&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server delete &lt;uuid or unique name&gt;
 </code></pre></div>
 
 <p>Just delete without questions asked:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid or unique name&gt;
+<div class="codehilite"><pre><span></span><code>cloudscale server delete --force &lt;uuid or unique name&gt;
 </code></pre></div>
                 
               
@@ -678,8 +683,8 @@ server list <span class="se">\</span>
       
     </div>
     
-      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

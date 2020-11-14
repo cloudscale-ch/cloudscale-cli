@@ -8,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
     
     
       
@@ -17,10 +18,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.358818c7.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -69,7 +70,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="cloudscale.ch CLI" class="md-header-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -153,7 +156,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="cloudscale.ch CLI" class="md-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -293,16 +298,16 @@
                 
                 <h1 id="verbosity-and-debugging">Verbosity and Debugging</h1>
 <p>Increase the verbosity by changing the log level from its default value <code>ERROR</code> to the value <code>INFO</code>:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale --debug server list
+<div class="codehilite"><pre><span></span><code>cloudscale --debug server list
 </code></pre></div>
 
 <p>or alternatively</p>
-<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_DEBUG</span><span class="o">=</span><span class="m">1</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_DEBUG</span><span class="o">=</span><span class="m">1</span>
 cloudscale server list
 </code></pre></div>
 
 <p>To set the default log level e.g. to <code>DEBUG</code> use the <code>CLOUDSCALE_LOG_LEVEL</code> environment variable:</p>
-<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_LOG_LEVEL</span><span class="o">=</span>debug
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_LOG_LEVEL</span><span class="o">=</span>debug
 cloudscale server list
 </code></pre></div>
                 
@@ -357,8 +362,8 @@ cloudscale server list
       
     </div>
     
-      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

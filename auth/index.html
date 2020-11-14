@@ -8,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
     
     
       
@@ -17,10 +18,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.358818c7.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -69,7 +70,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="cloudscale.ch CLI" class="md-header-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -153,7 +156,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="cloudscale.ch CLI" class="md-nav__button md-logo" aria-label="cloudscale.ch CLI">
       
@@ -372,15 +377,15 @@
 </ul>
 <h2 id="config-file-with-profiles">Config File with Profiles</h2>
 <p>Create an ini file in your <code>$XDG_CONFIG_HOME/cloudscale/cloudscale.ini</code>, <code>.cloudscale.ini</code> (leading dot) in your <code>$HOME</code> or a <code>cloudscale.ini</code> (without leading dot) in the <code>CWD</code> with the following schema:</p>
-<div class="ini codehilite"><pre><span></span><code><span class="k">[default]</span>
+<div class="codehilite"><pre><span></span><code><span class="k">[default]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 </code></pre></div>
 
 <p>The default profile taken if available is <code>default</code>. The profile can be chosen by passing <code>--profile</code> or <code>CLOUDSCALE_PROFILE</code> ENV variable.</p>
-<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_PROFILE</span><span class="o">=</span>staging
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_PROFILE</span><span class="o">=</span>staging
 </code></pre></div>
 
-<div class="ini codehilite"><pre><span></span><code><span class="k">[production]</span>
+<div class="codehilite"><pre><span></span><code><span class="k">[production]</span>
 <span class="na">api_token</span> <span class="o">=</span> <span class="s">&lt;token&gt;</span>
 
 <span class="k">[staging]</span>
@@ -388,17 +393,17 @@
 </code></pre></div>
 
 <p>Passing the command line option will overwrite the ENV var as one would expect:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale --profile production server list
+<div class="codehilite"><pre><span></span><code>cloudscale --profile production server list
 </code></pre></div>
 
 <h2 id="command-line-argument">Command Line Argument</h2>
 <p>Use the <code>--api-token</code> parameter:</p>
-<div class="shell codehilite"><pre><span></span><code>cloudscale --api-token &lt;your_token&gt; server create ...
+<div class="codehilite"><pre><span></span><code>cloudscale --api-token &lt;your_token&gt; server create ...
 </code></pre></div>
 
 <h2 id="by-evironment-variable">By Evironment Variable</h2>
 <p>Use the ENV <code>CLOUDSCALE_API_TOKEN</code> variable:</p>
-<div class="shell codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_API_TOKEN</span><span class="o">=</span>&lt;your token&gt;
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">CLOUDSCALE_API_TOKEN</span><span class="o">=</span>&lt;your token&gt;
 cloudscale flavor list
 </code></pre></div>
                 
@@ -467,8 +472,8 @@ cloudscale flavor list
       
     </div>
     
-      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
