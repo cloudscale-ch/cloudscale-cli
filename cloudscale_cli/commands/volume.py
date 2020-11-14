@@ -1,3 +1,4 @@
+import sys
 import click
 
 @click.group()
@@ -57,13 +58,22 @@ def cmd_create(cloudscale, name, server_uuids, size_gb, volume_type, zone, tags)
 @click.argument('uuid', required=True)
 @click.option('--name')
 @click.option('--server-uuids', multiple=True)
+@click.option('--detach', is_flag=True)
 @click.option('--size-gb', type=int)
 @click.option('--tag', 'tags', multiple=True)
 @click.option('--clear-tag', 'clear_tags', multiple=True)
 @click.option('--clear-all-tags', is_flag=True)
 @volume.command("update")
 @click.pass_obj
-def cmd_update(cloudscale, uuid, name, server_uuids, size_gb, tags, clear_tags, clear_all_tags):
+def cmd_update(cloudscale, uuid, name, server_uuids, size_gb, detach, tags, clear_tags, clear_all_tags):
+    # Unhandle server_uuids if not set
+    if not detach and not server_uuids:
+        server_uuids = None
+
+    elif server_uuids and detach:
+        click.echo("Error: --server-uuids and --detach are mutually exclusive", err=True)
+        sys.exit(1)
+
     cloudscale.cmd_update(
         uuid=uuid,
         tags=tags,
