@@ -8,6 +8,7 @@ def region(ctx):
         'slug',
         'zones',
     ]
+    ctx.obj.resource_table_sort_key = 'slug'
 
 @click.option('--filter-json')
 @region.command("list")

@@ -13,6 +13,7 @@ def subnet(ctx):
         'tags',
     ]
     ctx.obj.resource_name_key = None
+    ctx.obj.resource_table_sort_key = 'cidr'
 
 @click.option('--filter-tag')
 @click.option('--filter-json')

@@ -14,6 +14,16 @@ def volume(ctx):
         'server_uuids',
         'uuid',
     ]
+    ctx.obj.response_transform_json = '''
+        [].{
+            "name": name,
+            "type": type,
+            "tags": tags,
+            "server_uuids": server_uuids,
+            "zone": zone.slug,
+            "uuid": uuid
+            }
+    '''
 
 @click.option('--filter-tag')
 @click.option('--filter-json')

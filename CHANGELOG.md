@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 - cloudscale-sdk updated to 0.5.0.
 - Add option `--detach` for volumes to detach.
+- Add natural sort for table output.
 
 ## v1.0.1 (2020-10-09)
 

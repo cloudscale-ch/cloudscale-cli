@@ -12,6 +12,16 @@ def server_group(ctx):
         'tags',
         'uuid',
     ]
+    ctx.obj.response_transform_json = '''
+        [].{
+            "name": name,
+            "type": type,
+            "servers": servers,
+            "zone": zone.slug,
+            "tags": tags,
+            "uuid": uuid
+            }
+    '''
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
