@@ -1,9 +1,9 @@
 import json
+import jmespath
 from click import Group
 from collections import OrderedDict
 from tabulate import tabulate
 from pygments import highlight, lexers, formatters
-import jmespath
 
 
 class OrderedGroup(Group):
@@ -19,13 +19,15 @@ class OrderedGroup(Group):
         return sorted(self.commands.keys())
 
 
+def format_json(data: list, format_json: str = None) -> list:
+    if format_json:
+        data = jmespath.search(format_json, data)
+    return data
+
 def to_table(data: list, headers: list, format_json: str = None) -> str:
     '''
     Turn a list into a table
     '''
-
-    if format_json:
-        data = jmespath.search(format_json, data)
 
     formated_headers = []
 

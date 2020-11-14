@@ -2,8 +2,9 @@ import sys
 import time
 import click
 import jmespath
+from natsort import natsorted, ns
 from cloudscale import Cloudscale, CloudscaleApiException
-from ..util import to_table, to_pretty_json, tags_to_dict
+from ..util import to_table, to_pretty_json, tags_to_dict, format_json
 
 if sys.stdout.isatty():
     from yaspin import yaspin as Spinner
@@ -38,6 +39,9 @@ class CloudscaleCommand:
         # Alternate key to look for the resource as 'name'
         self.resource_name_key = 'name'
 
+        # Usually we want to sort the table by the key used as name
+        self.resource_table_sort_key = None
+
         self.response_transform_json = None
 
     def get_client_resource(self):
@@ -49,7 +53,16 @@ class CloudscaleCommand:
         else:
             if isinstance(response, dict):
                 response = [response]
-            return to_table(response, self.headers, self.response_transform_json)
+
+            if response:
+                response = format_json(response, self.response_transform_json)
+                sort_by_key = self.resource_table_sort_key or self.resource_name_key
+                if sort_by_key:
+                    if 'zone' in self.headers:
+                        response = natsorted(response, key=lambda x: (x['zone'], x[sort_by_key]), alg=ns.IGNORECASE)
+                    else:
+                        response = natsorted(response, key=lambda x: x[sort_by_key], alg=ns.IGNORECASE)
+            return to_table(response, self.headers)
 
     def cmd_list(self, filter_tag=None, filter_json=None, action=None, delete=False, force=False, wait=False):
         if action and delete:

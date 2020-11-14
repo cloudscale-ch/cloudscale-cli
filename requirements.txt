@@ -4,3 +4,4 @@ tabulate
 pygments
 jmespath
 yaspin
+natsort
