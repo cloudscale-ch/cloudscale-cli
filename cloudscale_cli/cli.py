@@ -12,6 +12,7 @@ from .commands.network import network
 from .commands.subnet import subnet
 from .commands.volume import volume
 from .commands.objects_user import objects_user
+from .commands.status import status
 
 @click.group(cls=OrderedGroup, context_settings={
     'help_option_names': ['-h', '--help'],
@@ -43,3 +44,4 @@ cli.add_command(network)
 cli.add_command(subnet)
 cli.add_command(volume)
 cli.add_command(objects_user)
+cli.add_command(status)
