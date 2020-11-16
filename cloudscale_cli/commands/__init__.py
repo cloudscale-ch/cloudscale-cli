@@ -166,7 +166,7 @@ class CloudscaleCommand:
             click.echo(e, err=True)
             sys.exit(1)
 
-    def cmd_update(self, uuid, tags, clear_tags, clear_all_tags, wait=False, **kwargs):
+    def cmd_update(self, uuid, tags=None, clear_tags=None, clear_all_tags=False, wait=False, **kwargs):
             try:
                 with Spinner(text=f"Querying by UUID {uuid}"):
                     self.get_client_resource().get_by_uuid(uuid)

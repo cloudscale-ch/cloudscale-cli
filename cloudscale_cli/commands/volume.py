@@ -95,6 +95,25 @@ def cmd_update(cloudscale, uuid, name, server_uuids, size_gb, detach, tags, clea
     )
 
 @click.argument('uuid', required=True)
+@click.option('--server-uuids', multiple=True, required=True)
+@volume.command("attach")
+@click.pass_obj
+def cmd_attach(cloudscale, uuid, server_uuids):
+    cloudscale.cmd_update(
+        uuid=uuid,
+        server_uuids=server_uuids,
+    )
+
+@click.argument('uuid', required=True)
+@volume.command("detach")
+@click.pass_obj
+def cmd_detach(cloudscale, uuid):
+    cloudscale.cmd_update(
+        uuid=uuid,
+        server_uuids=list(),
+    )
+
+@click.argument('uuid', required=True)
 @click.option('--force', is_flag=True)
 @volume.command("delete")
 @click.pass_obj
