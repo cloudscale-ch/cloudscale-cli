@@ -82,6 +82,16 @@ def cmd_update(cloudscale, network_id, server_uuid, reverse_ptr, tags, clear_tag
     )
 
 @click.argument('network-id', required=True)
+@click.option('--server-uuid', '--server', required=True)
+@floating_ip.command("assign")
+@click.pass_obj
+def cmd_assign(cloudscale, network_id, server_uuid):
+    cloudscale.cmd_update(
+        uuid=network_id,
+        server_uuid=server_uuid,
+    )
+
+@click.argument('network-id', required=True)
 @click.option('--force', is_flag=True)
 @floating_ip.command("delete")
 @click.pass_obj
