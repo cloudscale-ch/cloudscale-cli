@@ -12,6 +12,7 @@ def objects_user(ctx):
         'id',
     ]
     ctx.obj.resource_name_key = 'display_name'
+    ctx.obj.resource_uuid_name = "id"
     ctx.obj.response_transform_json = '''
         [].{
             "display_name": display_name,
@@ -21,6 +22,7 @@ def objects_user(ctx):
             "id": id
             }
     '''
+
 @click.option('--filter-tag')
 @click.option('--filter-json')
 @click.option('--delete', is_flag=True)

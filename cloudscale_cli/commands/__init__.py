@@ -39,6 +39,9 @@ class CloudscaleCommand:
         # Alternate key to look for the resource as 'name'
         self.resource_name_key = 'name'
 
+        # Some resource have a different identifier name
+        self.resource_uuid_name = 'UUID'
+
         # Usually we want to sort the table by the key used as name
         self.resource_table_sort_key = None
 
@@ -129,16 +132,16 @@ class CloudscaleCommand:
 
     def cmd_show(self, uuid):
         try:
-            with Spinner(text=f"Querying by UUID {uuid}"):
+            with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
                 response = self.get_client_resource().get_by_uuid(uuid)
             click.echo(self._format_output(response))
         except CloudscaleApiException as e:
             results = self.cmd_get_by_name(name=uuid)
             if not results:
                 if self.resource_name_key:
-                    msg = f"No resource found for {self.cloud_resource_name} having UUID or {self.resource_name_key}: {uuid}"
+                    msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name} or {self.resource_name_key}: {uuid}"
                 else:
-                    msg = f"No resource found for {self.cloud_resource_name} having UUID: {uuid}"
+                    msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name}: {uuid}"
                 click.echo(msg, err=True)
                 sys.exit(1)
             click.echo(self._format_output(results))
@@ -168,24 +171,24 @@ class CloudscaleCommand:
 
     def cmd_update(self, uuid, tags, clear_tags, clear_all_tags, wait=False, **kwargs):
             try:
-                with Spinner(text=f"Querying by UUID {uuid}"):
+                with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
                     self.get_client_resource().get_by_uuid(uuid)
 
             except CloudscaleApiException as e:
                 results = self.cmd_get_by_name(name=uuid)
                 if not results:
                     if self.resource_name_key:
-                        msg = f"No resource found for {self.cloud_resource_name} having UUID or {self.resource_name_key}: {uuid}"
+                        msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name} or {self.resource_name_key}: {uuid}"
                     else:
-                        msg = f"No resource found for {self.cloud_resource_name} having UUID: {uuid}"
+                        msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name}: {uuid}"
                     click.echo(msg, err=True)
                     sys.exit(1)
 
                 if len(results) > 1:
-                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
+                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use {self.resource_uuid_name} to select the resource.", err=True)
                     sys.exit(1)
 
-                # Single resource found, remember UUID
+                # Single resource found, remember identifier
                 uuid = results[0]['href'].split('/')[-1]
 
             try:
@@ -208,7 +211,7 @@ class CloudscaleCommand:
                         _tags = None
 
 
-                with Spinner(text=f"Updating by UUID {uuid}"):
+                with Spinner(text=f"Updating by {self.resource_uuid_name} {uuid}"):
                     self.get_client_resource().update(
                         uuid=uuid,
                         tags=_tags,
@@ -230,15 +233,15 @@ class CloudscaleCommand:
         try:
             if not skip_query:
                 try:
-                    with Spinner(text=f"Querying by UUID {uuid}"):
+                    with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
                         response = self.get_client_resource().get_by_uuid(uuid)
                 except CloudscaleApiException as e:
                     results = self.cmd_get_by_name(name=uuid)
                     if not results:
                         if self.resource_name_key:
-                            msg = f"No resource found for {self.cloud_resource_name} having UUID or {self.resource_name_key}: {uuid}"
+                            msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name} or {self.resource_name_key}: {uuid}"
                         else:
-                            msg = f"No resource found for {self.cloud_resource_name} having UUID: {uuid}"
+                            msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name}: {uuid}"
                         click.echo(msg, err=True)
                         sys.exit(1)
 
@@ -246,7 +249,7 @@ class CloudscaleCommand:
                         click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}", err=True)
                         sys.exit(1)
 
-                    # Single resource found, remember UUID
+                    # Single resource found, remember identifier
                     response = results[0]
                     uuid = results[0]['href'].split('/')[-1]
 
@@ -254,7 +257,7 @@ class CloudscaleCommand:
 
             if not force:
                 click.confirm('Do you want to delete?', abort=True)
-            with Spinner(text=f"Deleting by UUID {uuid}"):
+            with Spinner(text=f"Deleting by {self.resource_uuid_name} {uuid}"):
                 self.get_client_resource().delete(uuid)
             click.echo(f"{uuid} deleted!")
         except Exception as e:
@@ -264,24 +267,24 @@ class CloudscaleCommand:
     def cmd_act(self, action, uuid, wait=False):
         with Spinner(text=f"Processing"):
             try:
-                with Spinner(text=f"Querying by UUID {uuid}"):
+                with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
                     self.get_client_resource().get_by_uuid(uuid)
 
             except CloudscaleApiException as e:
                 results = self.cmd_get_by_name(name=uuid)
                 if not results:
                     if self.resource_name_key:
-                        msg = f"No resource found for {self.cloud_resource_name} having UUID or {self.resource_name_key}: {uuid}"
+                        msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name} or {self.resource_name_key}: {uuid}"
                     else:
-                        msg = f"No resource found for {self.cloud_resource_name} having UUID: {uuid}"
+                        msg = f"No resource found for {self.cloud_resource_name} having {self.resource_uuid_name}: {uuid}"
                     click.echo(msg, err=True)
                     sys.exit(1)
 
                 if len(results) > 1:
-                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
+                    click.echo(f"Error: More than one resource found for {self.cloud_resource_name} having name: {uuid}. Please use {self.resource_uuid_name} to select the resource.", err=True)
                     sys.exit(1)
 
-                # Single resource found, remember UUID
+                # Single resource found, remember identifier
                 uuid = results[0]['href'].split('/')[-1]
 
             try:
