@@ -1,5 +1,8 @@
 import click
 
+def normalize_network_id(network_id):
+    return network_id.split('/')[0]
+
 @click.group()
 @click.pass_context
 def floating_ip(ctx):
@@ -35,7 +38,7 @@ def cmd_list(cloudscale, filter_tag, filter_json, delete, force):
 @click.pass_obj
 def cmd_show(cloudscale, network_id):
     cloudscale.cmd_show(
-        uuid=network_id,
+        uuid=normalize_network_id(network_id),
     )
 
 @click.option('--ip-version', type=int, default=4, show_default=True)
@@ -74,7 +77,7 @@ def cmd_create(cloudscale, ip_version, server_uuid, prefix_length, reverse_ptr, 
 @click.pass_obj
 def cmd_update(cloudscale, network_id, server_uuid, reverse_ptr, tags, clear_tags, clear_all_tags):
     cloudscale.cmd_update(
-        uuid=network_id,
+        uuid=normalize_network_id(network_id),
         tags=tags,
         clear_tags=clear_tags,
         clear_all_tags=clear_all_tags,
@@ -98,6 +101,6 @@ def cmd_assign(cloudscale, network_id, server_uuid):
 @click.pass_obj
 def cmd_delete(cloudscale, network_id, force):
     cloudscale.cmd_delete(
-        uuid=network_id,
+        uuid=normalize_network_id(network_id),
         force=force,
     )
