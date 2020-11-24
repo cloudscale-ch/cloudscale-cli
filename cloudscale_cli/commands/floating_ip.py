@@ -14,6 +14,7 @@ def floating_ip(ctx):
         'tags',
     ]
     ctx.obj.resource_name_key = None
+    ctx.obj.resource_uuid_name = "network"
 
 @click.option('--filter-tag')
 @click.option('--filter-json')
