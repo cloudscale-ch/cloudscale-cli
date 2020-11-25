@@ -18,6 +18,7 @@ def volume(ctx):
         [].{
             "name": name,
             "type": type,
+            "size_gb": size_gb,
             "tags": tags,
             "server_uuids": server_uuids,
             "zone": zone.slug,
