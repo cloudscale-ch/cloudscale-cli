@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.1 (2020-11-25)
+
+### Bug fixes
+
+- Fixed missing size output in volume table listing.
+
 ## v1.2.0 (2020-11-24)
 
 ### Minor changes
