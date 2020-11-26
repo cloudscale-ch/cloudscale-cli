@@ -12,6 +12,7 @@ def server(ctx):
     headers = [
         'name',
         'status',
+        'flavor',
         'zone',
         'tags',
         'uuid',
