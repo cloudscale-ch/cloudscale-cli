@@ -29,7 +29,7 @@ Create up to 10 servers in a row with `--count`:
 !!! tip
     The option `--name` allows to use string format syntax with 2 special variables:
 
-    - `counter`: A number representing the current interation while creating multiple servers.
+    - `counter`: A number representing the current iteration while creating multiple servers.
     - `uid`: A random 8 char/number long string.
 
     This allows to create dynamic names, e.g.:
