@@ -30,7 +30,6 @@ class CloudscaleCommand:
             sys.exit(1)
 
         self._output = output
-        self._retries = 30
 
         self.cloud_resource_name = cloud_resource_name
         self.verbose = verbose
@@ -73,7 +72,7 @@ class CloudscaleCommand:
             sys.exit(1)
         try:
             with Spinner(text="Querying"):
-                response = self.get_client_resource().get_all(filter_tag)
+                response = self.get_client_resource().get_all(filter_tag=filter_tag)
             if filter_json:
                 try:
                     response = jmespath.search(filter_json, response)
@@ -104,13 +103,13 @@ class CloudscaleCommand:
                             getattr(self.get_client_resource(), action)(uuid)
 
                     if wait:
-                        response = self.get_client_resource().get_all(filter_tag)
+                        response = self.get_client_resource().get_all(filter_tag=filter_tag)
                         for r in response:
                             uuid = r['href'].split('/')[-1]
                             self.wait_for_status(uuid=uuid)
 
                     with Spinner(text="Querying"):
-                        response = self.get_client_resource().get_all(filter_tag)
+                        response = self.get_client_resource().get_all(filter_tag=filter_tag)
                     click.echo(self._format_output(response))
         except Exception as e:
             click.echo(e, err=True)
@@ -133,7 +132,7 @@ class CloudscaleCommand:
     def cmd_show(self, uuid):
         try:
             with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
-                response = self.get_client_resource().get_by_uuid(uuid)
+                response = self.get_client_resource().get_by_uuid(uuid=uuid)
             click.echo(self._format_output(response))
         except CloudscaleApiException as e:
             results = self.cmd_get_by_name(name=uuid)
@@ -172,7 +171,7 @@ class CloudscaleCommand:
     def cmd_update(self, uuid, tags=None, clear_tags=None, clear_all_tags=False, wait=False, **kwargs):
             try:
                 with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
-                    self.get_client_resource().get_by_uuid(uuid)
+                    self.get_client_resource().get_by_uuid(uuid=uuid)
 
             except CloudscaleApiException as e:
                 results = self.cmd_get_by_name(name=uuid)
@@ -222,7 +221,7 @@ class CloudscaleCommand:
                     response = self.wait_for_status(uuid=uuid)
                 else:
                     with Spinner(text=f"Querying {uuid}"):
-                        response = self.get_client_resource().get_by_uuid(uuid)
+                        response = self.get_client_resource().get_by_uuid(uuid=uuid)
 
                 click.echo(self._format_output(response))
             except Exception as e:
@@ -234,7 +233,7 @@ class CloudscaleCommand:
             if not skip_query:
                 try:
                     with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
-                        response = self.get_client_resource().get_by_uuid(uuid)
+                        response = self.get_client_resource().get_by_uuid(uuid=uuid)
                 except CloudscaleApiException as e:
                     results = self.cmd_get_by_name(name=uuid)
                     if not results:
@@ -268,7 +267,7 @@ class CloudscaleCommand:
         with Spinner(text=f"Processing"):
             try:
                 with Spinner(text=f"Querying by {self.resource_uuid_name} {uuid}"):
-                    self.get_client_resource().get_by_uuid(uuid)
+                    self.get_client_resource().get_by_uuid(uuid=uuid)
 
             except CloudscaleApiException as e:
                 results = self.cmd_get_by_name(name=uuid)
@@ -295,20 +294,20 @@ class CloudscaleCommand:
                     response = self.wait_for_status(uuid=uuid)
                 else:
                     with Spinner(text=f"Querying {uuid}"):
-                        response = self.get_client_resource().get_by_uuid(uuid)
+                        response = self.get_client_resource().get_by_uuid(uuid=uuid)
                 click.echo(self._format_output(response))
             except Exception as e:
                 click.echo(e, err=True)
                 sys.exit(1)
 
-    def wait_for_status(self, uuid):
+    def wait_for_status(self, uuid, status = "changing", sleep = 1, retries = 30, path = ""):
         with Spinner(text=f"Waiting for status {uuid}: ...") as sp:
-            for retry in range(1, self._retries):
-                response = self.get_client_resource().get_by_uuid(uuid)
-                if response['status'] != 'changing':
+            for retry in range(1, retries):
+                response = self.get_client_resource().get_by_uuid(uuid=uuid, path=path)
+                if response['status'] != status:
                     break
-                sp.text = f"Waiting for status {uuid}: {response['status']}"
-                time.sleep(1)
+                sp.text = f"Waiting for status {uuid}: {response['status']} { retry * '.'}"
+                time.sleep(sleep)
             else:
                 sp.text = f"Waiting for status {uuid} timed out."
                 time.sleep(1)

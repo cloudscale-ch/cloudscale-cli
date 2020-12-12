@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3.0 (2020-12-12)
+
+### Minor changes
+
+- Implemented custom image support.
+- cloudscale-sdk updated to 0.6.1.
+
 ## v1.2.1 (2020-11-25)
 
 ### Bug fixes
