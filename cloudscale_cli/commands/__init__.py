@@ -49,6 +49,14 @@ class CloudscaleCommand:
     def get_client_resource(self):
         return getattr(self._client, self.cloud_resource_name)
 
+    def _handle_tags(self, tags):
+        try:
+            tags = tags_to_dict(tags)
+            return tags
+        except ValueError as e:
+            click.echo(e, err=True)
+            sys.exit(1)
+
     def _format_output(self, response):
         if self._output == "json":
             return to_pretty_json(response)
@@ -151,11 +159,7 @@ class CloudscaleCommand:
     def cmd_create(self, silent=False, **kwargs):
         try:
             if 'tags' in kwargs:
-                try:
-                    kwargs['tags'] = tags_to_dict(kwargs['tags'])
-                except ValueError as e:
-                    click.echo(e, err=True)
-                    sys.exit(1)
+                kwargs['tags'] = self._handle_tags(kwargs['tags'])
 
             name = kwargs.get(self.resource_name_key, '')
             with Spinner(text=f"Creating {name}"):

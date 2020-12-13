@@ -2,7 +2,6 @@ import sys
 import time
 import click
 from . import Spinner
-from ..util import tags_to_dict
 
 @click.group()
 @click.pass_context
@@ -77,12 +76,7 @@ def cmd_show(cloudscale, uuid):
 @click.pass_obj
 def cmd_import(cloudscale, url, name, slug, user_data_handling, zones, source_format, tags, wait):
     try:
-        try:
-            tags = tags_to_dict(tags)
-        except ValueError as e:
-            click.echo(e, err=True)
-            sys.exit(1)
-
+        tags = cloudscale._handle_tags(tags)
         zones_string = ', '.join(zones)
         msg = f"{url} as {name} into zone: {zones_string}. "
 
