@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.3.0 (2020-12-12)
+## v1.3.0 (2020-12-13)
 
 ### Minor changes
 
