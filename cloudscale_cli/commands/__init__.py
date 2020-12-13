@@ -304,13 +304,18 @@ class CloudscaleCommand:
                 click.echo(e, err=True)
                 sys.exit(1)
 
-    def wait_for_status(self, uuid, status = "changing", sleep = 1, retries = 30, path = ""):
+    def wait_for_status(self, uuid, status = "changing", max_sleep = 4, retries = 30, path = ""):
         with Spinner(text=f"Waiting for status {uuid}: ...") as sp:
-            for retry in range(1, retries):
+            for retry in range(0, retries):
                 response = self.get_client_resource().get_by_uuid(uuid=uuid, path=path)
                 if response['status'] != status:
                     break
-                sp.text = f"Waiting for status {uuid}: {response['status']} { retry * '.'}"
+                sp.text = f"Waiting for {uuid} to finish, current status: {response['status']} { retry * '.'}"
+
+                # Exponential wait...
+                sleep = 2 ** retry
+                if sleep > max_sleep:
+                    sleep = max_sleep
                 time.sleep(sleep)
             else:
                 sp.text = f"Waiting for status {uuid} timed out."

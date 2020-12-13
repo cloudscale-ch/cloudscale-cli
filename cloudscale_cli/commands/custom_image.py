@@ -97,7 +97,7 @@ def cmd_import(cloudscale, url, name, slug, user_data_handling, zones, source_fo
 
         response = cloudscale.wait_for_status(uuid=response['uuid'],
             status = "in_progress",
-            sleep = 5,
+            max_sleep = 8,
             retries = 120,
             path = "/import"
         )
