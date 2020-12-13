@@ -26,9 +26,6 @@ jobs:
     - name: Test with tox
       run: tox
 
-    - name: GitHub Action for Flake8
-      uses: cclauss/GitHub-Action-for-Flake8@v0.5.0
-
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:

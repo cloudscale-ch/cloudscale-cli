@@ -2,8 +2,8 @@ name: Publish Docs
 
 on:
   push:
-    tags:
-    - 'v*'
+    branches:
+      - master
 
 jobs:
   deploy:
