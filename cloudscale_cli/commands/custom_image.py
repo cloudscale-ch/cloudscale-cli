@@ -7,25 +7,39 @@ from ..util import tags_to_dict
 @click.group()
 @click.pass_context
 def custom_image(ctx):
-    ctx.obj.cloud_resource_name = "custom_image"
-    ctx.obj.headers = [
+    headers = [
         'name',
-        'created_at',
         'slug',
+        'created_at',
         'zones',
-        'user_data_handling',
         'tags',
         'uuid',
     ]
+    verbose_headers = [
+        'name',
+        'slug',
+        'created_at',
+        'zones',
+        'user_data_handling',
+        'tags',
+        'checksum_md5',
+        'checksum_sha256',
+        'uuid',
+    ]
+
+    ctx.obj.cloud_resource_name = "custom_image"
+    ctx.obj.headers = verbose_headers if ctx.obj.verbose else headers
     ctx.obj.response_transform_json = '''
         [].{
             "name": name,
-            "created_at": created_at,
             "slug": slug,
             "user_data_handling": user_data_handling,
             "zones": zones[].slug,
             "tags": tags,
-            "uuid": uuid
+            "uuid": uuid,
+            "created_at": created_at,
+            "checksum_sha256": checksums.sha256,
+            "checksum_md5": checksums.md5
             }
     '''
 
