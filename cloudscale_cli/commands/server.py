@@ -4,6 +4,7 @@ import uuid
 import jmespath
 import os
 from cloudscale import CloudscaleApiException
+from ..interface_parameter_parser import parse_interface
 
 @click.group()
 @click.pass_context
@@ -125,6 +126,13 @@ def cmd_create(
             click.echo(f"Error: Could not format name '{name}': {e}", err=True)
             sys.exit(1)
 
+        interfaces_parsed = [parse_interface(i).as_json() for i in interfaces]
+
+        kwargs = {}
+        if not interfaces_parsed:
+            kwargs['use_public_network'] = use_public_network
+            kwargs['use_private_network'] = use_private_network
+
         s = cloudscale.cmd_create(
             silent=True,
             name=server_name,
@@ -133,11 +141,9 @@ def cmd_create(
             zone=zone,
             volume_size=volume_size,
             volumes=volumes or None,
-            interfaces=interfaces or None,
+            interfaces=interfaces_parsed or None,
             ssh_keys=ssh_keys or None,
             password=password,
-            use_public_network=use_public_network,
-            use_private_network=use_private_network,
             use_ipv6=use_ipv6,
             server_groups=server_groups or None,
             user_data=user_data,
@@ -166,6 +172,8 @@ def cmd_create(
 @server.command("update")
 @click.pass_obj
 def cmd_update(cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tags, clear_all_tags):
+    interfaces_parsed = [parse_interface(i).as_json() for i in interfaces]
+
     cloudscale.cmd_update(
         uuid=uuid,
         tags=tags,
@@ -173,7 +181,7 @@ def cmd_update(cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tag
         clear_all_tags=clear_all_tags,
         name=name,
         flavor=flavor,
-        interfaces=interfaces or None,
+        interfaces=interfaces_parsed or None,
         wait=wait,
     )
 
