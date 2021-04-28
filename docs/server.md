@@ -51,6 +51,51 @@ cloudscale server create \
 !!! tip
     To ensure all servers created have booted and are running by providing the option `--wait`.
 
+## Usage of the `--interface` option in `server create` and `server update`
+If the `--interface` option is used, `--use-{public,private}-network` options are disabled.
+This are the examples from the api documentation:
+
+* Create a public network interface with an automatically assigned IPv4 address and an IPv6 address if `use_ipv6` is set
+to true:
+~~~
+--interface network=public
+~~~
+
+* Create a private network interface on the network identified by "UUID1". The interface will automatically be assigned an
+address from the DHCP range of the network's subnet.
+~~~
+--interface network=UUID1
+~~~
+
+* Create a private network interface on the network on which the subnet identified by "UUID2" is configured. The interface
+will automatically be assigned an address from the DHCP range of the subnet.
+~~~
+--interface subnet=UUID2
+~~~
+
+* This is equivalent to the schema defined above. It is only valid if the subnet identified by "UUID4" is configured on
+the network identified by "UUID3".
+~~~
+--interface network=UUID3,subnet=UUID4
+~~~
+
+* Create a private network interface on the network on which the subnet identified by "UUID5" is configured. The interface
+will automatically be assigned the address A.B.C.D.
+~~~
+--interface subnet=UUID5,address=A.B.C.D
+~~~
+
+* This is equivalent to the schema defined above. It is only valid if the subnet identified by "UUID7" is configured on
+the network identified by "UUID6".
+~~~
+--interface network=UUID6,subnet=UUID7,address=A.B.C.D
+~~~
+
+* Create a private network interface on the network identified by "UUID8". No IP address will be assigned using DHCP.
+~~~
+--interface network=UUID8,address=
+~~~
+
 ## List Servers
 
 Get a list as table view:
