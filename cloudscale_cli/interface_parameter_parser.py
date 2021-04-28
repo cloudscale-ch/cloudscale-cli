@@ -51,10 +51,10 @@ class CloudscaleInterfaceParameterParser():
             self._cursor += len(arg)
             return arg
         else:
-            raise NetworkParserError(f"Expected {arg}, but found {self._string[self._cursor:]} at position {self._cursor}")
+            raise NetworkParserError(f"Expected '{arg}', but found '{self._string[self._cursor:]}' at position {self._cursor}")
 
     def expect_uuid(self):
-        m = re.match(r'(^[\w-]*)', self._string[self._cursor:])
+        m = re.match(r'(^[\w]*-[\w]*-[\w]*-[\w]*-[\w]*)', self._string[self._cursor:])
         try:
             uuid = str(m.group(0))
             self._cursor += len(uuid)
@@ -69,7 +69,7 @@ class CloudscaleInterfaceParameterParser():
             self._cursor += len(address)
             return address
         except Exception:
-            raise NetworkParserError(f"Expected valid IPv4 Address, but found {self._string[self._cursor:]}")
+            raise NetworkParserError(f"Expected valid IPv4 address, but found '{self._string[self._cursor:]}'")
 
     def expect_string_or_uuid(self, arg=None):
         try:
@@ -78,7 +78,7 @@ class CloudscaleInterfaceParameterParser():
             try:
                 return self.expect_uuid()
             except NetworkParserError:
-                raise NetworkParserError(f"Expected UUID or {arg}, but found {self._string[self._cursor:]} at position {self._cursor}")
+                raise NetworkParserError(f"Expected UUID or '{arg}', but found '{self._string[self._cursor:]}' at position {self._cursor}")
 
     def expect_end(self):
         if self._cursor != len(self._string):
