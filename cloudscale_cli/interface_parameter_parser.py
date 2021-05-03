@@ -102,10 +102,19 @@ class CloudscaleInterfaceParameterParser():
             return uuid, self.parse_address()
         return uuid, None
 
+    def parse_multiple_subnets(self, interface):
+        while self.peek_strings('(') == '(':
+            self.expect_string('(')
+            subnet, address = self.parse_subnet()
+            interface.add_subnet(subnet, address)
+            self.expect_string(')')
+            if self.peek_strings(',') == ',':
+                self.expect_string(',')
+
 def parse_interface(string):
     parser = CloudscaleInterfaceParameterParser(string)
     interface = CloudscaleNetworkInterface()
-    type_ = parser.peek_strings('network', 'subnet')
+    type_ = parser.peek_strings('network', 'subnet','(')
     if type_ == 'network':
         parser.expect_string('network')
         parser.expect_string('=')
@@ -122,20 +131,18 @@ def parse_interface(string):
                         parser.expect_string('address=')
                         interface.assign_address = False
                     else:
-                        subnet = None
-                        address = parser.parse_address()
-                        interface.add_subnet(subnet, address)
+                        raise NetworkParserError(f"Cannot set a fixed IP address without a subnet")
             else:
-                while parser.peek_strings('(') == '(':
-                    parser.expect_string('(')
-                    subnet, address = parser.parse_subnet()
-                    interface.add_subnet(subnet, address)
-                    parser.expect_string(')')
-                    if parser.peek_strings(',') == ',':
-                        parser.expect_string(',')
+                parser.parse_multiple_subnets(interface)
     elif type_ == 'subnet':
         subnet, address = parser.parse_subnet()
         interface.add_subnet(subnet, address)
+    elif type_ == '(':
+        if not parser.peek_strings('(subnet') == '(subnet':
+            raise NetworkParserError(f"Cannot add an interface without network or subnet definition")
+        parser.parse_multiple_subnets(interface)
+    else:
+        raise NetworkParserError(f"Cannot add an interface without network or subnet definition")
 
     parser.expect_end()
     return interface

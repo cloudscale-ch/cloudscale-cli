@@ -29,6 +29,11 @@ import cloudscale_cli.interface_parameter_parser as p
             None
         ),
         (
+            '(subnet=91dbef92-ddb1-47e0-8625-73326792d3e1,address=172.26.241.14)',
+            {'addresses': [{'subnet': '91dbef92-ddb1-47e0-8625-73326792d3e1', 'address': '172.26.241.14'}]},
+            None
+        ),
+        (
             'network=9a23808b-dd19-480f-9f55-5a945da4e819,subnet=8e79cc58-dc9f-4f68-aeae-e0eac3f06f16,address=172.21.67.54',
             {'network': '9a23808b-dd19-480f-9f55-5a945da4e819', 'addresses': [{'subnet': '8e79cc58-dc9f-4f68-aeae-e0eac3f06f16', 'address': '172.21.67.54'}]},
             None
@@ -59,14 +64,37 @@ import cloudscale_cli.interface_parameter_parser as p
             "Expected valid IPv4 address, but found '172.2226.241,XX'"
         ),
         (
+            'network=91dbef92-ddb1-47e0-8625-73326792d3e1,address=172.26.241.14',
+            None,
+            "Cannot set a fixed IP address without a subnet"
+        ),
+        (
+            '(address=172.26.241.14)',
+            None,
+            "Cannot add an interface without network or subnet definition"
+        ),
+        (
+            'address=172.26.241.14',
+            None,
+            "Cannot add an interface without network or subnet definition"
+        ),
+        (
             'network=91dbef92-ddb1-47e0-8625-73326792d3e1,aaa',
             None,
             "Expected the end, but found 'aaa'"
         ),
-        ('foo', None, "Expected the end, but found 'foo'"),
-        ('network=foo', None, "Expected UUID or 'public', but found 'foo' at position 8")
+        ('foo', None, "Cannot add an interface without network or subnet definition"),
+        ('network=foo', None, "Expected UUID or 'public', but found 'foo' at position 8"),
+        (
+            # It's unclear if the API will support this case without specifing a network.
+            '(subnet=91dbef92-ddb1-47e0-8625-73326792d3e1,address=172.26.241.14),(subnet=91dbef92-ddb1-47e0-8625-73326792d3e2,address=172.26.241.15)',
+            {'addresses': [{'subnet': '91dbef92-ddb1-47e0-8625-73326792d3e1', 'address': '172.26.241.14'}, \
+                           {'subnet': '91dbef92-ddb1-47e0-8625-73326792d3e2', 'address': '172.26.241.15'}]},
+            None
+        ),
     ]
 )
+
 
 def test_parser(input, output, error):
     if error is None:
