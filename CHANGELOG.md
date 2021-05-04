@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.4.0 (2021-05-03)
+
+### Minor Chages
+
+- Implemented interface support.
+
 ## v1.3.1 (2020-12-13)
 
 ### Bug fixes
