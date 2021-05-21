@@ -57,7 +57,8 @@ If the `--interface` option is used, `--use-{public,private}-network` options ar
 To specify more than one interface, use the `--interface` option repeatedly.
 
 !!! warning
-    You must specify *all* interfaces to be attached to the server, e.g:
+    When making changes to a server's interfaces, you must (re-)specify **all** interfaces that should be attached to
+    the server (including all interfaces that should not be changed), e.g.:
 ~~~
 cloudscale server update \
 --interface network=UUID1 \
@@ -65,8 +66,8 @@ cloudscale server update \
 ~~~
 
 !!! tip
-    We recommend to not update interfaces while a
-    server is under production workload as short losses of connectivity might occur.
+    We recommend to not update interfaces while a server is under production workload as short losses of connectivity
+    might occur.
 
 This are the examples from the api documentation:
 
