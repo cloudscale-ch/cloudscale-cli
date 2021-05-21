@@ -53,6 +53,22 @@ cloudscale server create \
 
 ## Usage of the `--interface` option in `server create` and `server update`
 If the `--interface` option is used, `--use-{public,private}-network` options are disabled.
+
+To specify more than one interface, use the `--interface` option repeatedly.
+
+!!! warning
+    When making changes to a server's interfaces, you must (re-)specify **all** interfaces that should be attached to
+    the server (including all interfaces that should not be changed), e.g.:
+~~~
+cloudscale server update \
+--interface network=UUID1 \
+--interface subnet=UUID5,address=A.B.C.D
+~~~
+
+!!! tip
+    We recommend to not update interfaces while a server is under production workload as short losses of connectivity
+    might occur.
+
 This are the examples from the api documentation:
 
 * Create a public network interface with an automatically assigned IPv4 address and an IPv6 address if `use_ipv6` is set
