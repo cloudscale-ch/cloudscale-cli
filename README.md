@@ -29,6 +29,7 @@ Options:
   -h, --help                 Show this message and exit.
 
 Commands:
+  custom-image
   flavor
   floating-ip
   image
