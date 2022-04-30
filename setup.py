@@ -11,7 +11,7 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
     install_requires = list(i.rstrip() for i in f.readlines())
 
 extras_require = {
-    'highlight': ['pygments'],
+    "highlight": ["pygments"],
 }
 
 tests_require = []
@@ -24,7 +24,7 @@ with open("cloudscale_cli/version.py") as fp:
 
 setup(
     name="cloudscale-cli",
-    version=version['__version__'],
+    version=version["__version__"],
     author="René Moser",
     author_email="mail@renemoser.net",
     license="MIT",
@@ -44,10 +44,10 @@ setup(
     install_requires=install_requires,
     extras_require=extras_require,
     tests_require=tests_require,
-    python_requires='>=3.6',
+    python_requires=">=3.6",
     entry_points={
-        'console_scripts': [
-            'cloudscale = cloudscale_cli.cli:cli',
+        "console_scripts": [
+            "cloudscale = cloudscale_cli.cli:cli",
         ],
     },
 )

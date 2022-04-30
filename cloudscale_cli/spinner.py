@@ -1,6 +1,6 @@
 class DummySpinner:
     def __init__(self, *args, **kwargs):
-        self.text = ''
+        self.text = ""
 
     def write(self, *args, **kwargs):
         print(*args, **kwargs)

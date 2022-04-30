@@ -1,16 +1,18 @@
 import click
 
+
 @click.group()
 @click.pass_context
 def region(ctx):
     ctx.obj.cloud_resource_name = "region"
     ctx.obj.headers = [
-        'slug',
-        'zones',
+        "slug",
+        "zones",
     ]
-    ctx.obj.resource_table_sort_key = 'slug'
+    ctx.obj.resource_table_sort_key = "slug"
 
-@click.option('--filter-json')
+
+@click.option("--filter-json")
 @region.command("list")
 @click.pass_obj
 def cmd_list(cloudscale, filter_json):
