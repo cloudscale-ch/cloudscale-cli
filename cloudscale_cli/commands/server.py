@@ -1,41 +1,44 @@
-import sys
-import click
-import uuid
-import jmespath
 import os
+import sys
+import uuid
+
+import click
+import jmespath
 from cloudscale import CloudscaleApiException
+
 from ..interface_parameter_parser import parse_interface
+
 
 @click.group()
 @click.pass_context
 def server(ctx):
 
     headers = [
-        'name',
-        'status',
-        'flavor',
-        'zone',
-        'tags',
-        'uuid',
+        "name",
+        "status",
+        "flavor",
+        "zone",
+        "tags",
+        "uuid",
     ]
 
     verbose_headers = [
-        'name',
-        'image',
-        'flavor',
-        'status',
-        'zone',
-        'public_ips',
-        'private_ips',
-        'server_groups',
-        'volumes',
-        'tags',
-        'uuid',
+        "name",
+        "image",
+        "flavor",
+        "status",
+        "zone",
+        "public_ips",
+        "private_ips",
+        "server_groups",
+        "volumes",
+        "tags",
+        "uuid",
     ]
 
     ctx.obj.cloud_resource_name = "server"
     ctx.obj.headers = verbose_headers if ctx.obj.verbose else headers
-    ctx.obj.response_transform_json = '''
+    ctx.obj.response_transform_json = """
         [].{
             "name": name,
             "image": image.slug,
@@ -49,14 +52,15 @@ def server(ctx):
             "status": status,
             "uuid": uuid
             }
-    '''
+    """
 
-@click.option('--filter-tag')
-@click.option('--filter-json')
-@click.option('--action', type=click.Choice(['start', 'stop', 'reboot']))
-@click.option('--delete', is_flag=True)
-@click.option('--force', is_flag=True)
-@click.option('--wait', is_flag=True)
+
+@click.option("--filter-tag")
+@click.option("--filter-json")
+@click.option("--action", type=click.Choice(["start", "stop", "reboot"]))
+@click.option("--delete", is_flag=True)
+@click.option("--force", is_flag=True)
+@click.option("--wait", is_flag=True)
 @server.command("list")
 @click.pass_obj
 def cmd_list(cloudscale, filter_tag, filter_json, action, delete, force, wait):
@@ -69,7 +73,8 @@ def cmd_list(cloudscale, filter_tag, filter_json, action, delete, force, wait):
         wait=wait,
     )
 
-@click.argument('uuid', required=True)
+
+@click.argument("uuid", required=True)
 @server.command("show")
 @click.pass_obj
 def cmd_show(cloudscale, uuid):
@@ -77,23 +82,24 @@ def cmd_show(cloudscale, uuid):
         uuid=uuid,
     )
 
-@click.option('--count', type=click.IntRange(1, 10), default=1, show_default=True)
-@click.option('--name', required=True)
-@click.option('--flavor', required=True)
-@click.option('--image', required=True)
-@click.option('--zone')
-@click.option('--volume-size', type=int, default=10)
-@click.option('--volume', 'volumes', multiple=True)
-@click.option('--interface', 'interfaces', multiple=True)
-@click.option('--ssh-key', 'ssh_keys', multiple=True)
-@click.option('--password')
-@click.option('--use-public-network/--no-use-public-network', default=True)
-@click.option('--use-private-network/--no-use-private-network', default=False)
-@click.option('--use-ipv6/--no-use-ipv6', default=True)
-@click.option('--server-group', 'server_groups', multiple=True)
-@click.option('--user-data')
-@click.option('--tag', 'tags', multiple=True)
-@click.option('--wait', is_flag=True, help="Wait for status is running.")
+
+@click.option("--count", type=click.IntRange(1, 10), default=1, show_default=True)
+@click.option("--name", required=True)
+@click.option("--flavor", required=True)
+@click.option("--image", required=True)
+@click.option("--zone")
+@click.option("--volume-size", type=int, default=10)
+@click.option("--volume", "volumes", multiple=True)
+@click.option("--interface", "interfaces", multiple=True)
+@click.option("--ssh-key", "ssh_keys", multiple=True)
+@click.option("--password")
+@click.option("--use-public-network/--no-use-public-network", default=True)
+@click.option("--use-private-network/--no-use-private-network", default=False)
+@click.option("--use-ipv6/--no-use-ipv6", default=True)
+@click.option("--server-group", "server_groups", multiple=True)
+@click.option("--user-data")
+@click.option("--tag", "tags", multiple=True)
+@click.option("--wait", is_flag=True, help="Wait for status is running.")
 @server.command("create")
 @click.pass_obj
 def cmd_create(
@@ -118,7 +124,7 @@ def cmd_create(
 ):
     servers_created = list()
     while len(servers_created) < count:
-        uid = str(uuid.uuid4()).split('-')[0]
+        uid = str(uuid.uuid4()).split("-")[0]
         counter = len(servers_created) + 1
         try:
             server_name = name.format(uid=uid, counter=counter)
@@ -130,8 +136,8 @@ def cmd_create(
 
         kwargs = {}
         if not interfaces_parsed:
-            kwargs['use_public_network'] = use_public_network
-            kwargs['use_private_network'] = use_private_network
+            kwargs["use_public_network"] = use_public_network
+            kwargs["use_private_network"] = use_private_network
 
         s = cloudscale.cmd_create(
             silent=True,
@@ -154,24 +160,27 @@ def cmd_create(
     if wait:
         _tmp = []
         for i, server_created in enumerate(servers_created):
-            s = cloudscale.wait_for_status(server_created['uuid'])
+            s = cloudscale.wait_for_status(server_created["uuid"])
             _tmp.append(s)
 
         servers_created = _tmp
 
     click.echo(cloudscale._format_output(servers_created))
 
-@click.argument('uuid', required=True)
-@click.option('--name')
-@click.option('--flavor')
-@click.option('--interface', 'interfaces', multiple=True)
-@click.option('--tag', 'tags', multiple=True)
-@click.option('--clear-tag', 'clear_tags', multiple=True)
-@click.option('--clear-all-tags', is_flag=True)
-@click.option('--wait', is_flag=True, help="Wait for changes applied.")
+
+@click.argument("uuid", required=True)
+@click.option("--name")
+@click.option("--flavor")
+@click.option("--interface", "interfaces", multiple=True)
+@click.option("--tag", "tags", multiple=True)
+@click.option("--clear-tag", "clear_tags", multiple=True)
+@click.option("--clear-all-tags", is_flag=True)
+@click.option("--wait", is_flag=True, help="Wait for changes applied.")
 @server.command("update")
 @click.pass_obj
-def cmd_update(cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tags, clear_all_tags):
+def cmd_update(
+    cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tags, clear_all_tags
+):
     interfaces_parsed = [parse_interface(i).as_json() for i in interfaces]
 
     cloudscale.cmd_update(
@@ -185,8 +194,9 @@ def cmd_update(cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tag
         wait=wait,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--force', is_flag=True)
+
+@click.argument("uuid", required=True)
+@click.option("--force", is_flag=True)
 @server.command("delete")
 @click.pass_obj
 def cmd_delete(cloudscale, uuid, force):
@@ -195,8 +205,9 @@ def cmd_delete(cloudscale, uuid, force):
         force=force,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--wait', is_flag=True, help="Wait for status is running.")
+
+@click.argument("uuid", required=True)
+@click.option("--wait", is_flag=True, help="Wait for status is running.")
 @server.command("start")
 @click.pass_obj
 def cmd_start(cloudscale, uuid, wait):
@@ -206,8 +217,9 @@ def cmd_start(cloudscale, uuid, wait):
         wait=wait,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--wait', is_flag=True, help="Wait for status is stopped.")
+
+@click.argument("uuid", required=True)
+@click.option("--wait", is_flag=True, help="Wait for status is stopped.")
 @server.command("stop")
 @click.pass_obj
 def cmd_stop(cloudscale, uuid, wait):
@@ -217,8 +229,9 @@ def cmd_stop(cloudscale, uuid, wait):
         wait=wait,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--wait', is_flag=True, help="Wait for status is running.")
+
+@click.argument("uuid", required=True)
+@click.option("--wait", is_flag=True, help="Wait for status is running.")
 @server.command("reboot")
 @click.pass_obj
 def cmd_reboot(cloudscale, uuid, wait):
@@ -228,8 +241,14 @@ def cmd_reboot(cloudscale, uuid, wait):
         wait=wait,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--interface', type=click.Choice(['public', 'private']), default='public', show_default=True)
+
+@click.argument("uuid", required=True)
+@click.option(
+    "--interface",
+    type=click.Choice(["public", "private"]),
+    default="public",
+    show_default=True,
+)
 @server.command("ssh")
 @click.pass_obj
 def cmd_ssh(cloudscale, uuid, interface):
@@ -246,7 +265,10 @@ def cmd_ssh(cloudscale, uuid, interface):
             sys.exit(1)
 
         if len(results) > 1:
-            click.echo(f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.", err=True)
+            click.echo(
+                f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.",
+                err=True,
+            )
             sys.exit(1)
 
         response = results[0]
@@ -256,13 +278,13 @@ def cmd_ssh(cloudscale, uuid, interface):
         sys.exit(1)
 
     try:
-        filter_json = '''
+        filter_json = """
             {
             "public": interfaces[?type=='public'].addresses[0].address,
             "private": interfaces[?type=='private'].addresses[0].address,
             "username": image.default_username
             }
-        '''
+        """
         response = jmespath.search(filter_json, response)
         for host in response[interface]:
             ssh_cmd = f"ssh {response['username']}@{host}"

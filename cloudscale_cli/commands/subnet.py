@@ -1,24 +1,26 @@
 import click
 
+
 @click.group()
 @click.pass_context
 def subnet(ctx):
     ctx.obj.cloud_resource_name = "subnet"
     ctx.obj.headers = [
-        'uuid',
-        'cidr',
-        'network',
-        'gateway_address',
-        'dns_servers',
-        'tags',
+        "uuid",
+        "cidr",
+        "network",
+        "gateway_address",
+        "dns_servers",
+        "tags",
     ]
     ctx.obj.resource_name_key = None
-    ctx.obj.resource_table_sort_key = 'cidr'
+    ctx.obj.resource_table_sort_key = "cidr"
 
-@click.option('--filter-tag')
-@click.option('--filter-json')
-@click.option('--delete', is_flag=True)
-@click.option('--force', is_flag=True)
+
+@click.option("--filter-tag")
+@click.option("--filter-json")
+@click.option("--delete", is_flag=True)
+@click.option("--force", is_flag=True)
 @subnet.command("list")
 @click.pass_obj
 def cmd_list(cloudscale, filter_tag, filter_json, delete, force):
@@ -29,7 +31,8 @@ def cmd_list(cloudscale, filter_tag, filter_json, delete, force):
         force=force,
     )
 
-@click.argument('uuid', required=True)
+
+@click.argument("uuid", required=True)
 @subnet.command("show")
 @click.pass_obj
 def cmd_show(cloudscale, uuid):
@@ -37,11 +40,12 @@ def cmd_show(cloudscale, uuid):
         uuid=uuid,
     )
 
-@click.option('--cidr', required=True)
-@click.option('--network-uuid', required=True)
-@click.option('--gateway-address')
-@click.option('--dns-server', 'dns_servers', multiple=True)
-@click.option('--tag', 'tags', multiple=True)
+
+@click.option("--cidr", required=True)
+@click.option("--network-uuid", required=True)
+@click.option("--gateway-address")
+@click.option("--dns-server", "dns_servers", multiple=True)
+@click.option("--tag", "tags", multiple=True)
 @subnet.command("create")
 @click.pass_obj
 def cmd_create(cloudscale, cidr, network_uuid, gateway_address, dns_servers, tags):
@@ -53,15 +57,18 @@ def cmd_create(cloudscale, cidr, network_uuid, gateway_address, dns_servers, tag
         tags=tags,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--gateway-address')
-@click.option('--dns-server', 'dns_servers', multiple=True)
-@click.option('--tag', 'tags', multiple=True)
-@click.option('--clear-tag', 'clear_tags', multiple=True)
-@click.option('--clear-all-tags', is_flag=True)
+
+@click.argument("uuid", required=True)
+@click.option("--gateway-address")
+@click.option("--dns-server", "dns_servers", multiple=True)
+@click.option("--tag", "tags", multiple=True)
+@click.option("--clear-tag", "clear_tags", multiple=True)
+@click.option("--clear-all-tags", is_flag=True)
 @subnet.command("update")
 @click.pass_obj
-def cmd_update(cloudscale, uuid, gateway_address, dns_servers, tags, clear_tags, clear_all_tags):
+def cmd_update(
+    cloudscale, uuid, gateway_address, dns_servers, tags, clear_tags, clear_all_tags
+):
     cloudscale.cmd_update(
         uuid=uuid,
         gateway_address=gateway_address,
@@ -71,8 +78,9 @@ def cmd_update(cloudscale, uuid, gateway_address, dns_servers, tags, clear_tags,
         clear_all_tags=clear_all_tags,
     )
 
-@click.argument('uuid', required=True)
-@click.option('--force', is_flag=True)
+
+@click.argument("uuid", required=True)
+@click.option("--force", is_flag=True)
 @subnet.command("delete")
 @click.pass_obj
 def cmd_delete(cloudscale, uuid, force):
