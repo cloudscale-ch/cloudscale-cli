@@ -15,6 +15,8 @@ Create an ini file in your `$XDG_CONFIG_HOME/cloudscale/cloudscale.ini`, `.cloud
 api_token = <token>
 ~~~
 
+Do NOT quote the token.
+
 The default profile taken if available is `default`. The profile can be chosen by passing `--profile` or `CLOUDSCALE_PROFILE` ENV variable.
 
 ~~~shell
