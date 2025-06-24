@@ -32,7 +32,10 @@ def test_objects_user_get_all():
         status=200,
     )
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/objects-users", json={}, status=500
+        responses.GET,
+        CLOUDSCALE_API_URL + "/objects-users",
+        json={},
+        status=500,
     )
 
     runner = CliRunner()
@@ -128,7 +131,9 @@ def test_objects_user_delete():
         status=200,
     )
     responses.add(
-        responses.DELETE, CLOUDSCALE_API_URL + "/objects-users/" + uuid, status=204
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/objects-users/" + uuid,
+        status=204,
     )
     responses.add(
         responses.DELETE,
@@ -186,7 +191,10 @@ def test_objects_user_create():
         status=201,
     )
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/objects-users", json={}, status=500
+        responses.POST,
+        CLOUDSCALE_API_URL + "/objects-users",
+        json={},
+        status=500,
     )
     responses.add(
         responses.POST,
@@ -195,7 +203,10 @@ def test_objects_user_create():
         status=201,
     )
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/objects-users", json={}, status=500
+        responses.POST,
+        CLOUDSCALE_API_URL + "/objects-users",
+        json={},
+        status=500,
     )
 
     runner = CliRunner()
@@ -232,7 +243,6 @@ def test_objects_user_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/objects-users/" + uuid,
-        json=OBJECTS_USER_RESP,
         status=204,
     )
     responses.add(
@@ -244,7 +254,6 @@ def test_objects_user_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/objects-users/unknown",
-        json={},
         status=404,
     )
 

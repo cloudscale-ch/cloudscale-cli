@@ -111,7 +111,9 @@ def test_custom_images_delete():
         status=200,
     )
     responses.add(
-        responses.DELETE, CLOUDSCALE_API_URL + "/custom-images/" + uuid, status=204
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/custom-images/" + uuid,
+        status=204,
     )
 
     runner = CliRunner()
@@ -255,7 +257,6 @@ def test_custom_images_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/custom-images/" + uuid,
-        json=CUSTOM_IMAGE_RESP,
         status=204,
     )
     responses.add(

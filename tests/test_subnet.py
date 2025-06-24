@@ -22,9 +22,17 @@ SUBNET_RESP = {
 def test_subnet_get_all():
     uuid = "33333333-1864-4608-853a-0771b6885a3a"
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/subnets", json=[SUBNET_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/subnets",
+        json=[SUBNET_RESP],
+        status=200,
     )
-    responses.add(responses.GET, CLOUDSCALE_API_URL + "/subnets", json={}, status=500)
+    responses.add(
+        responses.GET,
+        CLOUDSCALE_API_URL + "/subnets",
+        json={},
+        status=500,
+    )
 
     runner = CliRunner()
     result = runner.invoke(
@@ -59,7 +67,10 @@ def test_subnet_get_by_uuid():
         status=200,
     )
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/subnets/" + uuid, json={}, status=500
+        responses.GET,
+        CLOUDSCALE_API_URL + "/subnets/" + uuid,
+        json={},
+        status=500,
     )
 
     runner = CliRunner()
@@ -114,7 +125,11 @@ def test_subnets_delete():
         json=SUBNET_RESP,
         status=200,
     )
-    responses.add(responses.DELETE, CLOUDSCALE_API_URL + "/subnets/" + uuid, status=204)
+    responses.add(
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/subnets/" + uuid,
+        status=204,
+    )
     responses.add(
         responses.DELETE,
         CLOUDSCALE_API_URL + "/subnets/unknown",
@@ -167,10 +182,16 @@ def test_subnets_create():
     dns_server1 = "185.79.232.101"
     dns_server2 = "185.79.232.102"
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/subnets", json=SUBNET_RESP, status=201
+        responses.POST,
+        CLOUDSCALE_API_URL + "/subnets",
+        json=SUBNET_RESP,
+        status=201,
     )
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/subnets", json=SUBNET_RESP, status=500
+        responses.POST,
+        CLOUDSCALE_API_URL + "/subnets",
+        json=SUBNET_RESP,
+        status=500,
     )
 
     runner = CliRunner()
@@ -220,7 +241,6 @@ def test_subnets_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/subnets/" + uuid,
-        json=SUBNET_RESP,
         status=204,
     )
     responses.add(
@@ -230,7 +250,10 @@ def test_subnets_update():
         status=200,
     )
     responses.add(
-        responses.PATCH, CLOUDSCALE_API_URL + "/subnets/" + uuid, json={}, status=500
+        responses.PATCH,
+        CLOUDSCALE_API_URL + "/subnets/" + uuid,
+        json={},
+        status=500,
     )
 
     runner = CliRunner()

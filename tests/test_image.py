@@ -15,9 +15,17 @@ IMAGE_RESP = {
 @responses.activate
 def test_image_get_all():
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/images", json=[IMAGE_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/images",
+        json=[IMAGE_RESP],
+        status=200,
     )
-    responses.add(responses.GET, CLOUDSCALE_API_URL + "/images", json={}, status=500)
+    responses.add(
+        responses.GET,
+        CLOUDSCALE_API_URL + "/images",
+        json={},
+        status=500,
+    )
 
     runner = CliRunner()
     result = runner.invoke(

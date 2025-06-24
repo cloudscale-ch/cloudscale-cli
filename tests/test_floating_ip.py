@@ -30,7 +30,10 @@ def test_floating_ip_get_all():
         status=200,
     )
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/floating-ips", json={}, status=500
+        responses.GET,
+        CLOUDSCALE_API_URL + "/floating-ips",
+        json={},
+        status=500,
     )
 
     runner = CliRunner()
@@ -105,7 +108,9 @@ def test_floating_ip_delete():
         status=200,
     )
     responses.add(
-        responses.DELETE, CLOUDSCALE_API_URL + "/floating-ips/" + network_id, status=204
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/floating-ips/" + network_id,
+        status=204,
     )
     responses.add(
         responses.DELETE,
@@ -222,7 +227,6 @@ def test_floating_ip_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/floating-ips/" + network_id,
-        json=FLOATING_IP_RESP,
         status=204,
     )
     responses.add(

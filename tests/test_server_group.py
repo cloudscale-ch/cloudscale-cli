@@ -34,7 +34,9 @@ def test_server_groups_get_all():
         status=200,
     )
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/server-groups", json={}, status=500
+        responses.GET,
+        CLOUDSCALE_API_URL + "/server-groups",
+        status=500,
     )
 
     runner = CliRunner()
@@ -121,7 +123,9 @@ def test_server_groups_delete():
         status=200,
     )
     responses.add(
-        responses.DELETE, CLOUDSCALE_API_URL + "/server-groups/" + uuid, status=204
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/server-groups/" + uuid,
+        status=204,
     )
     responses.add(
         responses.DELETE,
@@ -218,7 +222,6 @@ def test_server_groups_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/server-groups/" + uuid,
-        json=SERVER_GROUP_RESP,
         status=204,
     )
     responses.add(
@@ -343,7 +346,6 @@ def test_invalid_tags_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/server-groups/" + uuid,
-        json=SERVER_GROUP_RESP,
         status=204,
     )
     responses.add(
