@@ -80,7 +80,7 @@ def cmd_show(cloudscale, uuid):
 )
 @click.option("--zone", "zones", multiple=True, required=True)
 @click.option(
-    "--source-format", type=click.Choice(["raw"]), default="raw", show_default=True
+    "--source-format", type=click.Choice(["raw", "qcow2"]), default="raw", show_default=True
 )
 @click.option("--tag", "tags", multiple=True)
 @click.option("--wait", is_flag=True)
