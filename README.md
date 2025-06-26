@@ -45,3 +45,18 @@ Commands:
 ## Documentation
 
 Please visit [https://cloudscale-ch.github.io/cloudscale-cli](https://cloudscale-ch.github.io/cloudscale-cli).
+
+## Releases
+
+To create a new release, follow these steps:
+
+1. Create a branch named `release/<major>.<minor>.<patch>`.
+2. Create a PR of the branch and get it approved.
+3. Merge the change.
+4. Tag the release commit and push the tags.
+
+The branch should include the following:
+
+- A single commit that updates the release.
+- A version update in `cloudscale_cli/version.py`.
+- An updated changelog in `CHANGELOG.md`.
