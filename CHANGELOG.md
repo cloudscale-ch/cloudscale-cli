@@ -2,9 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.5.0 (2025-06-24)
+
+### Minor changes
+
+- Add qcow2 as supported image import format.
+- Drop support for Python <3.9.
+
+### Bug fixes
+
+- Fix some commands not showing up in certain configurations.
+
 ## v1.4.0 (2021-05-03)
 
-### Minor Chages
+### Minor changes
 
 - Implemented interface support.
 

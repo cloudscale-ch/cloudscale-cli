@@ -24,9 +24,17 @@ NETWORK_RESP = {
 @responses.activate
 def test_network_get_all():
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/networks", json=[NETWORK_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/networks",
+        json=[NETWORK_RESP],
+        status=200,
     )
-    responses.add(responses.GET, CLOUDSCALE_API_URL + "/networks", json={}, status=500)
+    responses.add(
+        responses.GET,
+        CLOUDSCALE_API_URL + "/networks",
+        json={},
+        status=500,
+    )
 
     runner = CliRunner()
     result = runner.invoke(
@@ -61,7 +69,10 @@ def test_network_get_by_uuid():
         status=200,
     )
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/networks/" + uuid, json={}, status=500
+        responses.GET,
+        CLOUDSCALE_API_URL + "/networks/" + uuid,
+        json={},
+        status=500,
     )
 
     runner = CliRunner()
@@ -105,7 +116,9 @@ def test_network_delete():
         status=200,
     )
     responses.add(
-        responses.DELETE, CLOUDSCALE_API_URL + "/networks/" + uuid, status=204
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/networks/" + uuid,
+        status=204,
     )
     responses.add(
         responses.DELETE,
@@ -158,9 +171,17 @@ def test_network_create():
     name = "my-network-name"
 
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/networks", json=NETWORK_RESP, status=201
+        responses.POST,
+        CLOUDSCALE_API_URL + "/networks",
+        json=NETWORK_RESP,
+        status=201,
     )
-    responses.add(responses.POST, CLOUDSCALE_API_URL + "/networks", json={}, status=500)
+    responses.add(
+        responses.POST,
+        CLOUDSCALE_API_URL + "/networks",
+        json={},
+        status=500,
+    )
 
     runner = CliRunner()
     result = runner.invoke(
@@ -196,7 +217,6 @@ def test_network_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/networks/" + uuid,
-        json=NETWORK_RESP,
         status=204,
     )
     responses.add(
@@ -206,7 +226,9 @@ def test_network_update():
         status=200,
     )
     responses.add(
-        responses.PATCH, CLOUDSCALE_API_URL + "/networks/" + uuid, json={}, status=500
+        responses.PATCH,
+        CLOUDSCALE_API_URL + "/networks/" + uuid,
+        status=500,
     )
 
     runner = CliRunner()

@@ -23,7 +23,10 @@ SERVER_RESP = {
 @responses.activate
 def test_server_get_all():
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/servers", json=[SERVER_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/servers",
+        json=[SERVER_RESP],
+        status=200,
     )
     responses.add(
         responses.GET,
@@ -58,7 +61,10 @@ def test_server_get_all():
 @responses.activate
 def test_server_get_all_fitlered():
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/servers", json=[SERVER_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/servers",
+        json=[SERVER_RESP],
+        status=200,
     )
 
     runner = CliRunner()
@@ -128,7 +134,11 @@ def test_server_delete():
         json=SERVER_RESP,
         status=200,
     )
-    responses.add(responses.DELETE, CLOUDSCALE_API_URL + "/servers/" + uuid, status=204)
+    responses.add(
+        responses.DELETE,
+        CLOUDSCALE_API_URL + "/servers/" + uuid,
+        status=204,
+    )
     responses.add(
         responses.DELETE,
         CLOUDSCALE_API_URL + "/servers/unknown",
@@ -194,7 +204,10 @@ def test_server_create():
     image = "debian9"
 
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/servers", json=SERVER_RESP, status=201
+        responses.POST,
+        CLOUDSCALE_API_URL + "/servers",
+        json=SERVER_RESP,
+        status=201,
     )
     responses.add(
         responses.POST,
@@ -245,7 +258,6 @@ def test_server_update():
     responses.add(
         responses.PATCH,
         CLOUDSCALE_API_URL + "/servers/" + uuid,
-        json=SERVER_RESP,
         status=204,
     )
     responses.add(
@@ -298,7 +310,9 @@ def test_server_update():
 def test_server_start():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/servers/" + uuid + "/start", status=204
+        responses.POST,
+        CLOUDSCALE_API_URL + "/servers/" + uuid + "/start",
+        status=204,
     )
     responses.add(
         responses.GET,
@@ -342,7 +356,9 @@ def test_server_start():
 def test_server_stop():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/servers/" + uuid + "/stop", status=204
+        responses.POST,
+        CLOUDSCALE_API_URL + "/servers/" + uuid + "/stop",
+        status=204,
     )
     responses.add(
         responses.GET,
@@ -386,7 +402,9 @@ def test_server_stop():
 def test_server_reboot():
     uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
     responses.add(
-        responses.POST, CLOUDSCALE_API_URL + "/servers/" + uuid + "/reboot", status=204
+        responses.POST,
+        CLOUDSCALE_API_URL + "/servers/" + uuid + "/reboot",
+        status=204,
     )
     responses.add(
         responses.GET,

@@ -15,9 +15,17 @@ FLAVOR_RESP = {
 @responses.activate
 def test_flavor_get_all():
     responses.add(
-        responses.GET, CLOUDSCALE_API_URL + "/flavors", json=[FLAVOR_RESP], status=200
+        responses.GET,
+        CLOUDSCALE_API_URL + "/flavors",
+        json=[FLAVOR_RESP],
+        status=200,
     )
-    responses.add(responses.GET, CLOUDSCALE_API_URL + "/flavors", json={}, status=500)
+    responses.add(
+        responses.GET,
+        CLOUDSCALE_API_URL + "/flavors",
+        json={},
+        status=500,
+    )
 
     runner = CliRunner()
     result = runner.invoke(
