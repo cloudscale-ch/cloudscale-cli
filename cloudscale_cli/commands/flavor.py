@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("flavor")
 @click.pass_context
 def flavor(ctx):
     ctx.obj.cloud_resource_name = "flavor"

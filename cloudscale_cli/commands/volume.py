@@ -3,7 +3,7 @@ import sys
 import click
 
 
-@click.group()
+@click.group("volume")
 @click.pass_context
 def volume(ctx):
     ctx.obj.cloud_resource_name = "volume"
@@ -137,7 +137,7 @@ def cmd_attach(cloudscale, uuid, server_uuids):
 def cmd_detach(cloudscale, uuid):
     cloudscale.cmd_update(
         uuid=uuid,
-        server_uuids=list(),
+        server_uuids=[],
     )
 
 

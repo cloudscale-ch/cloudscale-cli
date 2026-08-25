@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("server-group")
 @click.pass_context
 def server_group(ctx):
     ctx.obj.cloud_resource_name = "server_group"
