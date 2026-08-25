@@ -1,17 +1,33 @@
-clean:
-	rm -rf *.egg-info
-	rm -rf *.dist-info
-	rm -rf dist
-	rm -rf build
+.PHONY: install lint format test build clean docs docs-serve release test-release
+
+install:
+	uv sync
+
+lint:
+	uv run ruff check .
+	uv run ruff format --check .
+
+format:
+	uv run ruff check --fix .
+	uv run ruff format .
+
+test:
+	uv run pytest
 
 build: clean
-	python3 setup.py sdist bdist_wheel
+	uv build
 
-test-release:
-	twine upload --repository testpypi dist/*
+clean:
+	rm -rf dist build *.egg-info
 
-release:
-	twine upload dist/*
+docs-serve:
+	uv run --group docs mkdocs serve
 
 docs:
-	mkdocs gh-deploy
+	uv run --group docs mkdocs gh-deploy
+
+test-release: build
+	uv publish --index testpypi
+
+release: build
+	uv publish
