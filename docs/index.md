@@ -6,7 +6,7 @@ The official [cloudscale.ch](https://www.cloudscale.ch) command line interface (
 
 Packages are published on [PyPi](https://pypi.org/project/cloudscale-cli/).
 
-Install using `pip` or alternatively [pipx](https://pipxproject.github.io/pipx/):
+Install using `pip` or alternatively [pipx](https://pipx.pypa.io/):
 
 ~~~shell
 pipx install cloudscale-cli
