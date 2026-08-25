@@ -1,4 +1,5 @@
 from click.testing import CliRunner
+
 from cloudscale_cli.cli import cli
 
 

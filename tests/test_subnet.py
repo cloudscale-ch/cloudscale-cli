@@ -1,6 +1,7 @@
 import responses
 from click.testing import CliRunner
 from cloudscale import CLOUDSCALE_API_URL
+
 from cloudscale_cli.cli import cli
 
 SUBNET_RESP = {
@@ -20,7 +21,6 @@ SUBNET_RESP = {
 
 @responses.activate
 def test_subnet_get_all():
-    uuid = "33333333-1864-4608-853a-0771b6885a3a"
     responses.add(
         responses.GET,
         CLOUDSCALE_API_URL + "/subnets",

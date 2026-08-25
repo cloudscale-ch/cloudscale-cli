@@ -1,6 +1,9 @@
+import json
+
 import responses
 from click.testing import CliRunner
 from cloudscale import CLOUDSCALE_API_URL
+
 from cloudscale_cli.cli import cli
 
 VOLUME_RESP = {
@@ -334,3 +337,23 @@ def test_volume_detach():
         ],
     )
     assert result.exit_code == 0
+
+
+@responses.activate
+def test_volume_attach_and_detach():
+    uuid = "2db69ba3-1864-4608-853a-0771b6885a3a"
+    server_uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
+    responses.get(CLOUDSCALE_API_URL + "/volumes/" + uuid, json=VOLUME_RESP)
+    patch = responses.patch(CLOUDSCALE_API_URL + "/volumes/" + uuid, status=204)
+
+    runner = CliRunner()
+    result = runner.invoke(
+        cli,
+        ["-a", "token", "volume", "attach", uuid, "--server-uuids", server_uuid],
+    )
+    assert result.exit_code == 0
+    assert json.loads(patch.calls[0].request.body)["server_uuids"] == [server_uuid]
+
+    result = runner.invoke(cli, ["-a", "token", "volume", "detach", uuid])
+    assert result.exit_code == 0
+    assert json.loads(patch.calls[1].request.body)["server_uuids"] == []
