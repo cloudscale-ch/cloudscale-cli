@@ -26,6 +26,7 @@ Options:
   -p, --profile TEXT         Profile used in config file.
   --debug                    Enables debug log output.
   -o, --output [table|json]  Output format.  [default: table]
+  -v, --verbose              Verbose output.
   -h, --help                 Show this message and exit.
 
 Commands:
@@ -58,5 +59,15 @@ To create a new release, follow these steps:
 The branch should include the following:
 
 - A single commit that updates the release.
-- A version update in `cloudscale_cli/version.py`.
+- A version update in `cloudscale_cli/__init__.py`.
 - An updated changelog in `CHANGELOG.md`.
+## Development
+
+Requires Python 3.10 or newer and [uv](https://docs.astral.sh/uv/):
+
+~~~shell
+make install  # create the virtualenv
+make test     # run the tests
+make lint     # run the linter and formatter checks
+make format   # apply the formatter
+~~~

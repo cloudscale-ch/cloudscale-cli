@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("network")
 @click.pass_context
 def network(ctx):
     ctx.obj.cloud_resource_name = "network"

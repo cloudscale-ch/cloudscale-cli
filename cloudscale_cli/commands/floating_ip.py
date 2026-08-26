@@ -5,7 +5,7 @@ def normalize_network_id(network_id):
     return network_id.split("/")[0]
 
 
-@click.group()
+@click.group("floating-ip")
 @click.pass_context
 def floating_ip(ctx):
     ctx.obj.cloud_resource_name = "floating_ip"
@@ -65,10 +65,7 @@ def cmd_create(
     cloudscale, ip_version, server_uuid, prefix_length, reverse_ptr, scope, region, tags
 ):
     if not prefix_length:
-        if ip_version == 6:
-            prefix_length = 128
-        else:
-            prefix_length = 32
+        prefix_length = 128 if ip_version == 6 else 32
 
     cloudscale.cmd_create(
         ip_version=ip_version,

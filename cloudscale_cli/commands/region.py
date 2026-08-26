@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("region")
 @click.pass_context
 def region(ctx):
     ctx.obj.cloud_resource_name = "region"

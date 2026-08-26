@@ -1,6 +1,7 @@
 import responses
 from click.testing import CliRunner
 from cloudscale import CLOUDSCALE_API_URL
+
 from cloudscale_cli.cli import cli
 
 CUSTOM_IMAGE_RESP = {
@@ -282,3 +283,77 @@ def test_custom_images_update():
         ],
     )
     assert result.exit_code == 0
+
+
+@responses.activate
+def test_custom_images_import_wait_until_done():
+    uuid = "11111111-1864-4608-853a-0771b6885a3a"
+    responses.post(
+        CLOUDSCALE_API_URL + "/custom-images/import",
+        json=CUSTOM_IMAGE_IMPORT_RESP,
+        status=201,
+    )
+    responses.get(
+        CLOUDSCALE_API_URL + "/custom-images/import/" + uuid,
+        json=CUSTOM_IMAGE_IMPORT_RESP_SUCCESS,
+    )
+    show = responses.get(
+        CLOUDSCALE_API_URL + "/custom-images/" + uuid, json=CUSTOM_IMAGE_RESP
+    )
+
+    result = CliRunner().invoke(
+        cli,
+        [
+            "-a",
+            "token",
+            "custom-image",
+            "import",
+            "--name",
+            "my-image",
+            "--url",
+            "https://example.com/example.raw",
+            "--slug",
+            "my-image-slug",
+            "--zone",
+            "lpg1",
+            "--user-data-handling",
+            "pass-through",
+            "--tag",
+            "project=apollo",
+            "--wait",
+        ],
+    )
+    assert result.exit_code == 0
+    assert show.call_count == 1
+    assert "my-image" in result.output
+
+
+@responses.activate
+def test_custom_images_import_error():
+    responses.post(
+        CLOUDSCALE_API_URL + "/custom-images/import",
+        json={"detail": "Server error."},
+        status=500,
+    )
+
+    result = CliRunner().invoke(
+        cli,
+        [
+            "-a",
+            "token",
+            "custom-image",
+            "import",
+            "--name",
+            "my-image",
+            "--url",
+            "https://example.com/example.raw",
+            "--slug",
+            "my-image-slug",
+            "--zone",
+            "lpg1",
+            "--user-data-handling",
+            "pass-through",
+        ],
+    )
+    assert result.exit_code == 1
+    assert "Server error." in result.output

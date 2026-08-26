@@ -1,6 +1,7 @@
 import responses
 from click.testing import CliRunner
 from cloudscale import CLOUDSCALE_API_URL
+
 from cloudscale_cli.cli import cli
 
 SERVER_GROUP_RESP = {

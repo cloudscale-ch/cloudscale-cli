@@ -1,5 +1,6 @@
-import cloudscale_cli.interface_parameter_parser as p
 import pytest
+
+import cloudscale_cli.interfaces as p
 
 
 @pytest.mark.parametrize(
@@ -79,7 +80,7 @@ import pytest
         (
             "subnet=91dbef92,address=172.26.241.14",
             None,
-            "Expected UUID or 'None', but found '91dbef92,address=172.26.241.14' at position 7",
+            "Expected UUID, but found '91dbef92,address=172.26.241.14' at position 7",
         ),
         (
             "subnet=91dbef92-ddb1-47e0-8625-73326792d3e1,address=172.2226.241,XX",
@@ -113,7 +114,21 @@ import pytest
             "Expected UUID or 'public', but found 'foo' at position 8",
         ),
         (
-            # It's unclear if the API will support this case without specifing a network.
+            "network=9a23808b-dd19-480f-9f55-5a945da4e819,"
+            "(subnet=8e79cc58-dc9f-4f68-aeae-e0eac3f06f16,address=172.21.67.54)",
+            {
+                "network": "9a23808b-dd19-480f-9f55-5a945da4e819",
+                "addresses": [
+                    {
+                        "subnet": "8e79cc58-dc9f-4f68-aeae-e0eac3f06f16",
+                        "address": "172.21.67.54",
+                    }
+                ],
+            },
+            None,
+        ),
+        (
+            # It's unclear if the API supports this without specifing a network.
             "(subnet=91dbef92-ddb1-47e0-8625-73326792d3e1,address=172.26.241.14),(subnet=91dbef92-ddb1-47e0-8625-73326792d3e2,address=172.26.241.15)",
             {
                 "addresses": [
@@ -138,3 +153,10 @@ def test_parser(input, output, error):
         with pytest.raises(p.NetworkParserError) as e:
             p.parse_interface(input)
         assert str(e.value) == error
+
+
+def test_interface_without_network_and_without_address():
+    interface = p.CloudscaleNetworkInterface()
+    interface.assign_address = False
+    with pytest.raises(p.NetworkParserError, match="Cannot create json string"):
+        interface.as_json()

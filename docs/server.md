@@ -18,8 +18,8 @@ Create one server:
 
 ~~~shell
 cloudscale server create \
---flavor flex-2 \
---image centos-7 \
+--flavor flex-4-1 \
+--image debian-13 \
 --name my-server \
 --ssh-key "$(cat ~/.ssh/id_rsa.pub)"
 ~~~
@@ -41,8 +41,8 @@ Create up to 10 servers in a row with `--count`:
 
 ~~~shell
 cloudscale server create \
---flavor flex-2 \
---image centos-7 \
+--flavor flex-4-1 \
+--image debian-13 \
 --ssh-key "$(cat ~/.ssh/id_rsa.pub)" \
 --name 'my-server-{counter}' \
 --count 10
@@ -145,7 +145,7 @@ cloudscale server list --filter-tag project
 Get a list of stopped servers:
 
 ~~~shell
-cloudscale server list --filter-json '[?status == `stopped`]'
+cloudscale server list --filter-json "[?status == 'stopped']"
 ~~~
 
 Get a list of stopped servers having tag `project=demo` and start them after accepting:
@@ -153,18 +153,7 @@ Get a list of stopped servers having tag `project=demo` and start them after acc
 ~~~shell
 cloudscale server list \
 --filter-tag project=demo \
---filter-json '[?status == `stopped`]' \
---action start
-...
-Do you want to start? [y/N]:
-~~~
-
-Start a list of stopped servers after accepting having tag `project=demo`:
-
-~~~shell
-cloudscale server list \
---filter-tag project=demo \
---filter-json '[?status == `stopped`]' \
+--filter-json "[?status == 'stopped']" \
 --action start
 ...
 Do you want to start? [y/N]:
@@ -175,7 +164,7 @@ Delete a list of stopped servers after accepting having tag `project=demo`:
 ~~~shell
 cloudscale server list \
 --filter-tag project=demo \
---filter-json '[?status == `stopped`]' \
+--filter-json "[?status == 'stopped']" \
 --delete
 ...
 Do you want to delete? [y/N]:
@@ -188,17 +177,17 @@ cloudscale \
 --output json \
 --profile production \
 server list \
---filter-json '[?status == `stopped`].{"server_name": name, "zone": zone.slug, "image": image.slug, "flavor": flavor.slug}'
+--filter-json "[?status == 'stopped'].{server_name: name, zone: zone.slug, image: image.slug, flavor: flavor.slug}"
 [
     {
-        "flavor": "flex-8",
-        "image": "rhel-7",
+        "flavor": "flex-4-1",
+        "image": "debian-13",
         "server_name": "server1",
         "zone": "rma1"
     },
     {
-        "flavor": "flex-8",
-        "image": "centos-7",
+        "flavor": "flex-4-1",
+        "image": "debian-13",
         "server_name": "server2",
         "zone": "rma1"
     }

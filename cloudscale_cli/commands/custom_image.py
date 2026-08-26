@@ -1,12 +1,10 @@
-import sys
-import time
-
 import click
 
-from . import Spinner
+from ..command import abort
+from ..spinner import Spinner
 
 
-@click.group()
+@click.group("custom-image")
 @click.pass_context
 def custom_image(ctx):
     headers = [
@@ -80,7 +78,10 @@ def cmd_show(cloudscale, uuid):
 )
 @click.option("--zone", "zones", multiple=True, required=True)
 @click.option(
-    "--source-format", type=click.Choice(["raw", "qcow2"]), default="raw", show_default=True
+    "--source-format",
+    type=click.Choice(["raw", "qcow2"]),
+    default="raw",
+    show_default=True,
 )
 @click.option("--tag", "tags", multiple=True)
 @click.option("--wait", is_flag=True)
@@ -89,13 +90,12 @@ def cmd_show(cloudscale, uuid):
 def cmd_import(
     cloudscale, url, name, slug, user_data_handling, zones, source_format, tags, wait
 ):
-    try:
-        tags = cloudscale._handle_tags(tags)
-        zones_string = ", ".join(zones)
-        msg = f"{url} as {name} into zone: {zones_string}. "
+    tags = cloudscale.parse_tags(tags)
+    zones_string = ", ".join(zones)
 
-        with Spinner(text="Importing " + msg):
-            response = cloudscale.get_client_resource().import_by_url(
+    try:
+        with Spinner(text=f"Importing {url} as {name} into zone: {zones_string}. "):
+            response = cloudscale.resource.import_by_url(
                 url=url,
                 name=name,
                 slug=slug,
@@ -107,7 +107,7 @@ def cmd_import(
 
         if not wait:
             click.echo("Import continues in the background and may take a while.")
-            sys.exit(0)
+            return
 
         response = cloudscale.wait_for_status(
             uuid=response["uuid"],
@@ -118,15 +118,13 @@ def cmd_import(
         )
 
         if response.get("status") == "failed":
-            click.echo("Import failed.")
-            sys.exit(1)
+            abort("Import failed.")
 
-        response = cloudscale.get_client_resource().get_by_uuid(uuid=response["uuid"])
-        click.echo(cloudscale._format_output(response))
+        response = cloudscale.resource.get_by_uuid(uuid=response["uuid"])
+        click.echo(cloudscale.format_output(response))
 
     except Exception as e:
-        click.echo(e, err=True)
-        sys.exit(1)
+        abort(e)
 
 
 @click.argument("uuid", required=True)

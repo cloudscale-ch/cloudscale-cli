@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("image")
 @click.pass_context
 def image(ctx):
     ctx.obj.cloud_resource_name = "image"

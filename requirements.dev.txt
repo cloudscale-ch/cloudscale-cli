@@ -1,6 +1,0 @@
-pip-tools
-pytest-cache
-pytest-cov
-pytest>=5.0.0
-responses
-tox

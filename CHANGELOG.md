@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Minor changes
+
+- Python 3.10 is now the minimum supported version, tested up to Python 3.14.
+- cloudscale-sdk updated to 0.7.0.
+- Packaging moved from `setup.py` to `pyproject.toml`, the development
+  workflow uses `uv` and `ruff`.
+- `--help` no longer requires an API token to be configured.
+
+### Bug fixes
+
+- Fixed `cloudscale server-group` not being available with Click 8.2 and newer,
+  where it was registered as `cloudscale server` and shadowed the server
+  commands.
+- Fixed autocompletion instructions, which still used the Click 7 syntax.
+- Fixed wrong column headers in table output when the listed resources did not
+  all provide the same fields.
+
+### Other changes
+
+- Running `cloudscale` without a command still shows the help, but exits with
+  the usage error code 2 as any other Click based CLI does.
+
 ## v1.5.0 (2025-06-24)
 
 ### Minor changes

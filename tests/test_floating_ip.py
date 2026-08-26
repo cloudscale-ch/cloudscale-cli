@@ -1,6 +1,9 @@
+import json
+
 import responses
 from click.testing import CliRunner
 from cloudscale import CLOUDSCALE_API_URL
+
 from cloudscale_cli.cli import cli
 
 FLOATING_IP_RESP = {
@@ -22,7 +25,6 @@ FLOATING_IP_RESP = {
 
 @responses.activate
 def test_floating_ip_get_all():
-    network_id = "192.0.2.123"
     responses.add(
         responses.GET,
         CLOUDSCALE_API_URL + "/floating-ips",
@@ -281,3 +283,30 @@ def test_floating_ip_missing_api_key():
         ],
     )
     assert result.exit_code == 1
+
+
+@responses.activate
+def test_floating_ip_assign():
+    network_id = "192.0.2.123"
+    server_uuid = "47cec963-fcd2-482f-bdb6-24461b2d47b1"
+    responses.get(
+        CLOUDSCALE_API_URL + "/floating-ips/" + network_id, json=FLOATING_IP_RESP
+    )
+    patch = responses.patch(
+        CLOUDSCALE_API_URL + "/floating-ips/" + network_id, status=204
+    )
+
+    result = CliRunner().invoke(
+        cli,
+        [
+            "-a",
+            "token",
+            "floating-ip",
+            "assign",
+            network_id,
+            "--server-uuid",
+            server_uuid,
+        ],
+    )
+    assert result.exit_code == 0
+    assert json.loads(patch.calls[0].request.body)["server"] == server_uuid

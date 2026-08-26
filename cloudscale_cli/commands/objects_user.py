@@ -1,7 +1,7 @@
 import click
 
 
-@click.group()
+@click.group("objects-user")
 @click.pass_context
 def objects_user(ctx):
     ctx.obj.cloud_resource_name = "objects_user"

@@ -1,15 +1,30 @@
 import os
-import sys
 import uuid
 
 import click
 import jmespath
-from cloudscale import CloudscaleApiException
 
-from ..interface_parameter_parser import parse_interface
+from ..command import abort
+from ..interfaces import NetworkParserError, parse_interface
+
+SSH_ADDRESSES_QUERY = """
+    {
+    "public": interfaces[?type=='public'].addresses[0].address,
+    "private": interfaces[?type=='private'].addresses[0].address,
+    "username": image.default_username
+    }
+"""
 
 
-@click.group()
+def parse_interfaces(interfaces: tuple[str, ...]) -> list[dict]:
+    """Turn the --interface options into the JSON structure of the API."""
+    try:
+        return [parse_interface(i).as_json() for i in interfaces]
+    except NetworkParserError as e:
+        abort(e)
+
+
+@click.group("server")
 @click.pass_context
 def server(ctx):
 
@@ -122,17 +137,16 @@ def cmd_create(
     count,
     wait,
 ):
-    servers_created = list()
+    servers_created = []
     while len(servers_created) < count:
         uid = str(uuid.uuid4()).split("-")[0]
         counter = len(servers_created) + 1
         try:
             server_name = name.format(uid=uid, counter=counter)
         except KeyError as e:
-            click.echo(f"Error: Could not format name '{name}': {e}", err=True)
-            sys.exit(1)
+            abort(f"Error: Could not format name '{name}': {e}")
 
-        interfaces_parsed = [parse_interface(i).as_json() for i in interfaces]
+        interfaces_parsed = parse_interfaces(interfaces)
 
         kwargs = {}
         if not interfaces_parsed:
@@ -158,14 +172,12 @@ def cmd_create(
         servers_created.append(s)
 
     if wait:
-        _tmp = []
-        for i, server_created in enumerate(servers_created):
-            s = cloudscale.wait_for_status(server_created["uuid"])
-            _tmp.append(s)
+        servers_created = [
+            cloudscale.wait_for_status(server_created["uuid"])
+            for server_created in servers_created
+        ]
 
-        servers_created = _tmp
-
-    click.echo(cloudscale._format_output(servers_created))
+    click.echo(cloudscale.format_output(servers_created))
 
 
 @click.argument("uuid", required=True)
@@ -181,8 +193,6 @@ def cmd_create(
 def cmd_update(
     cloudscale, uuid, name, flavor, interfaces, wait, tags, clear_tags, clear_all_tags
 ):
-    interfaces_parsed = [parse_interface(i).as_json() for i in interfaces]
-
     cloudscale.cmd_update(
         uuid=uuid,
         tags=tags,
@@ -190,7 +200,7 @@ def cmd_update(
         clear_all_tags=clear_all_tags,
         name=name,
         flavor=flavor,
-        interfaces=interfaces_parsed or None,
+        interfaces=parse_interfaces(interfaces) or None,
         wait=wait,
     )
 
@@ -253,47 +263,13 @@ def cmd_reboot(cloudscale, uuid, wait):
 @click.pass_obj
 def cmd_ssh(cloudscale, uuid, interface):
     try:
-        response = cloudscale.get_client_resource().get_by_uuid(uuid)
-    except CloudscaleApiException as e:
-        results = cloudscale.cmd_get_by_name(name=uuid)
-        if not results:
-            if cloudscale.resource_name_key:
-                msg = f"No resource found for {cloudscale.cloud_resource_name} having UUID or {cloudscale.resource_name_key}: {uuid}"
-            else:
-                msg = f"No resource found for {cloudscale.cloud_resource_name} having UUID: {uuid}"
-            click.echo(msg, err=True)
-            sys.exit(1)
-
-        if len(results) > 1:
-            click.echo(
-                f"Error: More than one resource found for {cloudscale.cloud_resource_name} having name: {uuid}. Please use UUID to select the resource.",
-                err=True,
-            )
-            sys.exit(1)
-
-        response = results[0]
-
+        _, response = cloudscale.find_one(uuid)
     except Exception as e:
-        click.echo(e, err=True)
-        sys.exit(1)
+        abort(e)
 
-    try:
-        filter_json = """
-            {
-            "public": interfaces[?type=='public'].addresses[0].address,
-            "private": interfaces[?type=='private'].addresses[0].address,
-            "username": image.default_username
-            }
-        """
-        response = jmespath.search(filter_json, response)
-        for host in response[interface]:
-            ssh_cmd = f"ssh {response['username']}@{host}"
-            os.system(ssh_cmd)
-            break
-        else:
-            click.echo(f"No IP on interface found: {interface}", err=True)
-            sys.exit(1)
+    addresses = jmespath.search(SSH_ADDRESSES_QUERY, response)
+    host = next(iter(addresses[interface] or []), None)
+    if not host:
+        abort(f"No IP on interface found: {interface}")
 
-    except Exception as e:
-        click.echo(e, err=True)
-        sys.exit(1)
+    os.system(f"ssh {addresses['username']}@{host}")

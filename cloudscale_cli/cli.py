@@ -1,6 +1,9 @@
+"""Entry point of the cloudscale.ch command line interface."""
+
 import click
 
-from .commands import OUTPUT_FORMATS, CloudscaleCommand
+from . import __version__
+from .command import CloudscaleCommand
 from .commands.custom_image import custom_image
 from .commands.flavor import flavor
 from .commands.floating_ip import floating_ip
@@ -12,8 +15,14 @@ from .commands.server import server
 from .commands.server_group import server_group
 from .commands.subnet import subnet
 from .commands.volume import volume
-from .util import OrderedGroup
-from .version import __version__
+from .output import OUTPUT_FORMATS
+
+
+class OrderedGroup(click.Group):
+    """A click group listing its commands in alphabetical order."""
+
+    def list_commands(self, ctx: click.Context) -> list[str]:
+        return sorted(self.commands)
 
 
 @click.group(
@@ -43,7 +52,14 @@ from .version import __version__
     "--verbose", "-v", envvar="CLOUDSCALE_VERBOSE", is_flag=True, help="Verbose output."
 )
 @click.pass_context
-def cli(ctx, profile, api_token, debug, output, verbose):
+def cli(
+    ctx: click.Context,
+    profile: str,
+    api_token: str,
+    debug: bool,
+    output: str,
+    verbose: bool,
+) -> None:
     ctx.obj = CloudscaleCommand(
         api_token=api_token,
         profile=profile,
@@ -53,14 +69,17 @@ def cli(ctx, profile, api_token, debug, output, verbose):
     )
 
 
-cli.add_command(custom_image, name='custom-image')
-cli.add_command(flavor, name='flavor')
-cli.add_command(floating_ip, name='floating-ip')
-cli.add_command(image, name='image')
-cli.add_command(network, name='network')
-cli.add_command(objects_user, name='objects-user')
-cli.add_command(region, name='region')
-cli.add_command(server_group, name='server-group')
-cli.add_command(server, name='server')
-cli.add_command(subnet, name='subnet')
-cli.add_command(volume, name='volume')
+for command in (
+    custom_image,
+    flavor,
+    floating_ip,
+    image,
+    network,
+    objects_user,
+    region,
+    server,
+    server_group,
+    subnet,
+    volume,
+):
+    cli.add_command(command)
